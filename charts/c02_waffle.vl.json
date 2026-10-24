@@ -59,7 +59,7 @@
           "type": "nominal",
           "scale": {
             "domain": ["Introduced an innovation", "Still working on one", "Not innovation-active"],
-            "range": ["#54278f", "#9e9ac8", "#e3e5e8"]
+            "range": ["#08519c", "#6baed6", "#e3e5e8"]
           },
           "legend": null
         },
@@ -95,7 +95,7 @@
               "type": "nominal",
               "scale": {
                 "domain": ["Introduced an innovation", "Still working on one", "Not innovation-active"],
-                "range": ["#54278f", "#9e9ac8", "#e3e5e8"]
+                "range": ["#08519c", "#6baed6", "#e3e5e8"]
               },
               "legend": null
             }

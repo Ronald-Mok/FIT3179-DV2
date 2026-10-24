@@ -12,15 +12,16 @@
 
   /* Meaning-bearing colours (Okabe–Ito based, colour-blind safe) */
   --accent: #d55e00;   /* Australia / focus */
-  --goods: #0072b2;    /* goods & services innovation */
+  --goods: #e69f00;    /* goods & services innovation */
+  --goods-text: #a86400; /* darker shade of --goods for headings on white */
   --process: #009e73;  /* process innovation */
 
-  /* Sequential ramp for "more" (ColorBrewer Purples) */
-  --seq-1: #efedf5;
-  --seq-2: #cbc9e2;
-  --seq-3: #9e9ac8;
-  --seq-4: #756bb1;
-  --seq-5: #54278f;
+  /* Sequential ramp for "more" (ColorBrewer Blues) */
+  --seq-1: #eff3ff;
+  --seq-2: #bdd7e7;
+  --seq-3: #6baed6;
+  --seq-4: #3182bd;
+  --seq-5: #08519c;
 
   /* Ordinal ramp for business size, Micro → Large */
   --size-1: #c9d3dd;
@@ -137,7 +138,7 @@ a {
   margin-bottom: 8px;
 }
 
-/* Matches the "innovation-active" purple used in the charts */
+/* Matches the "innovation-active" blue used in the charts */
 .big-stat--active {
   color: var(--seq-5);
 }
@@ -306,7 +307,7 @@ a {
 }
 
 .card-goods h3 {
-  color: var(--goods);
+  color: var(--goods-text);
 }
 
 .card-process {
@@ -331,6 +332,13 @@ a {
 
 .finding {
   font-size: 16px;
+}
+
+.takeaways {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gutter);
+  margin-top: 32px;
 }
 
 .finding-num {
@@ -487,6 +495,7 @@ a {
   }
 
   .findings,
+  .takeaways,
   .footer-grid,
   .toc ol {
     grid-template-columns: 1fr;

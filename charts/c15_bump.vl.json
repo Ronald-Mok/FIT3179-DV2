@@ -1,0 +1,152 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "C15 Bump chart: rank of each of 17 industries by % of businesses innovation-active, in every ABS survey since the 2018-19 definitions (2018-19, 2019-20, 2020-21, 2022-23, 2024-25). Ranks are worked out with a window transform (tied industries share a rank). Retail, Accommodation and food, and Manufacturing are coloured and drawn on top; hover any line to pick it out.",
+  "width": "container",
+  "height": 440,
+  "data": {
+    "url": "data/industry_innovation_series.csv",
+    "format": { "type": "csv", "parse": { "innovation_active": "number" } }
+  },
+  "transform": [
+    {
+      "window": [{ "op": "rank", "as": "rank" }],
+      "groupby": ["year"],
+      "sort": [{ "field": "innovation_active", "order": "descending" }]
+    },
+    { "calculate": "replace(datum.year, '-', '–')", "as": "year_label" },
+    { "calculate": "datum.innovation_active / 100", "as": "share" },
+    { "calculate": "indexof(['Retail', 'Accommodation & food', 'Manufacturing'], datum.industry) >= 0", "as": "featured" }
+  ],
+  "encoding": {
+    "x": {
+      "field": "year",
+      "type": "ordinal",
+      "title": null,
+      "scale": { "type": "point", "padding": 0.95 },
+      "axis": {
+        "orient": "top",
+        "domain": false,
+        "ticks": false,
+        "labelAngle": 0,
+        "labelPadding": 10,
+        "labelFontWeight": 600,
+        "labelColor": "#1d2125",
+        "labelExpr": "replace(datum.label, '-', '–')"
+      }
+    },
+    "y": {
+      "field": "rank",
+      "type": "quantitative",
+      "title": null,
+      "scale": { "domain": [1, 17], "reverse": true, "nice": false },
+      "axis": null
+    }
+  },
+  "layer": [
+    {
+      "params": [
+        {
+          "name": "hover",
+          "select": { "type": "point", "fields": ["industry"], "on": "pointerover", "clear": "pointerout" }
+        }
+      ],
+      "mark": { "type": "line", "color": "#c8ccd2", "strokeWidth": 2, "strokeCap": "round", "strokeJoin": "round" },
+      "encoding": { "detail": { "field": "industry" } }
+    },
+    {
+      "transform": [{ "filter": "datum.featured" }],
+      "mark": { "type": "line", "strokeWidth": 3.5, "strokeCap": "round", "strokeJoin": "round" },
+      "encoding": {
+        "detail": { "field": "industry" },
+        "color": {
+          "field": "industry",
+          "type": "nominal",
+          "scale": { "domain": ["Retail", "Accommodation & food", "Manufacturing"], "range": ["#08519c", "#009e73", "#a01d26"] },
+          "legend": null
+        }
+      }
+    },
+    {
+      "transform": [{ "filter": { "param": "hover", "empty": false } }],
+      "mark": { "type": "line", "color": "#1d2125", "strokeWidth": 3.5, "strokeCap": "round", "strokeJoin": "round" },
+      "encoding": { "detail": { "field": "industry" } }
+    },
+    {
+      "transform": [{ "filter": "!datum.featured" }],
+      "mark": { "type": "circle", "size": 45, "color": "#aab1ba", "opacity": 1, "stroke": "#ffffff", "strokeWidth": 1 },
+      "encoding": {
+        "tooltip": [
+          { "field": "industry", "title": "Industry" },
+          { "field": "year_label", "title": "Survey year" },
+          { "field": "share", "title": "Innovation-active", "format": ".1%" },
+          { "field": "rank", "title": "Rank (of 17)" }
+        ]
+      }
+    },
+    {
+      "transform": [{ "filter": "datum.featured" }],
+      "mark": { "type": "circle", "size": 110, "opacity": 1, "stroke": "#ffffff", "strokeWidth": 1.5 },
+      "encoding": {
+        "color": { "field": "industry", "type": "nominal", "legend": null },
+        "tooltip": [
+          { "field": "industry", "title": "Industry" },
+          { "field": "year_label", "title": "Survey year" },
+          { "field": "share", "title": "Innovation-active", "format": ".1%" },
+          { "field": "rank", "title": "Rank (of 17)" }
+        ]
+      }
+    },
+    {
+      "transform": [
+        { "filter": "datum.year === '2018-19'" },
+        { "calculate": "datum.industry + '  ' + datum.rank", "as": "label" }
+      ],
+      "encoding": { "text": { "field": "label" } },
+      "layer": [
+        {
+          "transform": [{ "filter": "datum.featured" }],
+          "mark": { "type": "text", "align": "right", "baseline": "middle", "dx": -12, "fontSize": 12, "fontWeight": 700 },
+          "encoding": { "color": { "field": "industry", "type": "nominal", "legend": null } }
+        },
+        {
+          "transform": [{ "filter": "!datum.featured" }],
+          "mark": { "type": "text", "align": "right", "baseline": "middle", "dx": -12, "fontSize": 12, "color": "#5b6470" }
+        }
+      ]
+    },
+    {
+      "transform": [
+        { "filter": "datum.year === '2018-19' || datum.year === '2024-25'" },
+        { "pivot": "year", "value": "rank", "groupby": ["industry", "featured"] },
+        { "calculate": "datum['2018-19'] - datum['2024-25']", "as": "change" },
+        {
+          "calculate": "datum['2024-25'] + '  ' + datum.industry + (datum.featured ? (datum.change > 0 ? '  ▲' + datum.change : datum.change < 0 ? '  ▼' + (-datum.change) : '') : '')",
+          "as": "label"
+        },
+        { "calculate": "'2024-25'", "as": "year" },
+        { "calculate": "datum['2024-25']", "as": "rank" }
+      ],
+      "encoding": { "text": { "field": "label" } },
+      "layer": [
+        {
+          "transform": [{ "filter": "datum.featured" }],
+          "mark": { "type": "text", "align": "left", "baseline": "middle", "dx": 12, "fontSize": 12, "fontWeight": 700 },
+          "encoding": { "color": { "field": "industry", "type": "nominal", "legend": null } }
+        },
+        {
+          "transform": [{ "filter": "!datum.featured" }],
+          "mark": { "type": "text", "align": "left", "baseline": "middle", "dx": 12, "fontSize": 12, "color": "#5b6470" }
+        }
+      ]
+    },
+    {
+      "data": { "values": [{}] },
+      "mark": { "type": "text", "align": "left", "baseline": "top", "fontSize": 12, "fontStyle": "italic", "color": "#1d2125" },
+      "encoding": {
+        "x": { "value": 0 },
+        "y": { "value": 452 },
+        "text": { "value": "Biggest climber: Accommodation & food, 10th → 5th. Biggest fall: Manufacturing, 2nd → 6th. Retail moved from 4th to 1st." }
+      }
+    }
+  ]
+}

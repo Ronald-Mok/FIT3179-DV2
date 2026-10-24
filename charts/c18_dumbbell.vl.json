@@ -1,0 +1,114 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "C18 Dumbbell chart: % of all businesses reporting each barrier to innovation in 2022-23 (ABS Innovation in Australian Business 2022-23, cube 8 table 2; two years ended 30 June 2023) and 2024-25 (ABS CAB 2024-25, cube 11 table 2; year ended 30 June 2025). Rows are sorted by the 2022-23 value, with 'Any barrier' on top. Caveat: the 2024-25 survey asked about one year instead of two, which on its own lowers the figures.",
+  "width": "container",
+  "height": 290,
+  "data": {
+    "url": "data/barriers_2022-23_vs_2024-25.csv",
+    "format": { "type": "csv", "parse": { "pct_2022_23": "number", "pct_2024_25": "number" } }
+  },
+  "transform": [
+    { "calculate": "datum.barrier === 'Any barrier' ? 1000 : datum.pct_2022_23", "as": "sort_key" },
+    { "calculate": "datum.pct_2024_25 - datum.pct_2022_23", "as": "change" }
+  ],
+  "encoding": {
+    "y": {
+      "field": "barrier",
+      "type": "nominal",
+      "sort": { "field": "sort_key", "op": "max", "order": "descending" },
+      "title": null,
+      "axis": {
+        "domain": false,
+        "ticks": false,
+        "labelPadding": 8,
+        "labelLimit": 260,
+        "labelFontWeight": { "condition": { "test": "datum.value === 'Any barrier'", "value": 700 }, "value": 400 },
+        "labelColor": { "condition": { "test": "datum.value === 'Any barrier'", "value": "#1d2125" }, "value": "#5b6470" }
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": { "type": "rule", "color": "#c8ccd2", "strokeWidth": 3 },
+      "encoding": {
+        "x": {
+          "field": "pct_2024_25",
+          "type": "quantitative",
+          "title": "% of businesses reporting the barrier",
+          "scale": { "domain": [0, 45] },
+          "axis": { "values": [0, 10, 20, 30, 40], "labelExpr": "datum.label + '%'" }
+        },
+        "x2": { "field": "pct_2022_23" }
+      }
+    },
+    {
+      "transform": [
+        { "fold": ["pct_2022_23", "pct_2024_25"], "as": ["year_key", "pct"] },
+        { "calculate": "datum.year_key === 'pct_2022_23' ? '2022–23 (two years)' : '2024–25 (one year)'", "as": "year" },
+        { "calculate": "datum.pct / 100", "as": "share" },
+        { "calculate": "datum.change", "as": "change_pts" }
+      ],
+      "layer": [
+        {
+          "mark": { "type": "circle", "size": 170, "opacity": 1, "stroke": "#ffffff", "strokeWidth": 1.5 },
+          "encoding": {
+            "x": { "field": "pct", "type": "quantitative" },
+            "color": {
+              "field": "year",
+              "type": "nominal",
+              "title": null,
+              "scale": { "domain": ["2022–23 (two years)", "2024–25 (one year)"], "range": ["#8a94a0", "#08519c"] },
+              "legend": { "orient": "top", "direction": "horizontal", "symbolType": "circle", "labelLimit": 200 }
+            },
+            "tooltip": [
+              { "field": "barrier", "title": "Barrier" },
+              { "field": "year", "title": "Survey" },
+              { "field": "share", "title": "Businesses reporting it", "format": ".1%" },
+              { "field": "change_pts", "title": "Change (percentage points)", "format": "+.1f" }
+            ]
+          }
+        },
+        {
+          "transform": [{ "filter": "datum.year_key === 'pct_2022_23'" }],
+          "mark": { "type": "text", "align": "left", "baseline": "middle", "dx": 12, "fontSize": 11, "color": "#5b6470" },
+          "encoding": {
+            "x": { "field": "pct", "type": "quantitative" },
+            "text": { "field": "pct", "type": "quantitative", "format": ".1f" }
+          }
+        },
+        {
+          "transform": [{ "filter": "datum.year_key === 'pct_2024_25'" }],
+          "mark": { "type": "text", "align": "right", "baseline": "middle", "dx": -12, "fontSize": 11, "fontWeight": 600, "color": "#08519c" },
+          "encoding": {
+            "x": { "field": "pct", "type": "quantitative" },
+            "text": { "field": "pct", "type": "quantitative", "format": ".1f" }
+          }
+        }
+      ]
+    },
+    {
+      "transform": [
+        { "filter": "datum.barrier === 'Any barrier'" },
+        { "calculate": "format(datum.pct_2022_23, '.0f') + '% → ' + format(datum.pct_2024_25, '.0f') + '% reported a barrier'", "as": "label" }
+      ],
+      "mark": { "type": "text", "align": "right", "baseline": "middle", "dx": -44, "fontSize": 12, "fontStyle": "italic", "color": "#1d2125" },
+      "encoding": {
+        "x": { "field": "pct_2024_25", "type": "quantitative" },
+        "text": { "field": "label" }
+      }
+    },
+    {
+      "transform": [
+        { "filter": "datum.barrier !== 'Any barrier'" },
+        { "window": [{ "op": "row_number", "as": "order" }], "sort": [{ "field": "change", "order": "ascending" }] },
+        { "filter": "datum.order === 1" },
+        { "calculate": "'Biggest fall: ' + format(-datum.change, '.1f') + ' points'", "as": "label" }
+      ],
+      "mark": { "type": "text", "align": "left", "baseline": "middle", "dx": 44, "fontSize": 12, "fontStyle": "italic", "color": "#1d2125" },
+      "encoding": {
+        "x": { "field": "pct_2022_23", "type": "quantitative" },
+        "text": { "field": "label" }
+      }
+    }
+  ]
+}

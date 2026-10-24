@@ -1,0 +1,119 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "C13 Scorecard heatmap: each state and territory ranked 1 (highest) to 8 on four measures. Innovation-active and AI use: % of businesses, 2024-25 (ABS CAB). Business R&D: % of gross state product, 2023-24 (ABS BERD). Patent applications: 2025 standard patent applications by Australian applicants per 100,000 people (IP Australia IP RAPID; ABS population at 30 June 2025). Darker = higher rank. A drop-down re-sorts the rows.",
+  "width": "container",
+  "height": 344,
+  "params": [
+    {
+      "name": "sortBy",
+      "value": "avg",
+      "bind": {
+        "input": "select",
+        "name": "Sort states by ",
+        "options": ["avg", "Innovation-active", "Using AI", "Business R&D", "Patent applications"],
+        "labels": ["Average rank", "Innovation-active", "Using AI", "Business R&D", "Patent applications"]
+      }
+    }
+  ],
+  "data": {
+    "url": "data/state_scorecard.csv",
+    "format": { "type": "csv", "parse": { "measure_order": "number", "value": "number", "rank": "number", "count": "number" } }
+  },
+  "transform": [
+    { "joinaggregate": [{ "op": "mean", "field": "rank", "as": "avg_rank" }], "groupby": ["state"] },
+    { "calculate": "sortBy === 'avg' ? datum.avg_rank : datum.measure === sortBy ? datum.rank : null", "as": "sort_key" },
+    { "joinaggregate": [{ "op": "max", "field": "sort_key", "as": "state_sort" }], "groupby": ["state"] },
+    {
+      "calculate": "datum.measure === 'Patent applications' ? format(datum.value, '.1f') : datum.measure === 'Business R&D' ? format(datum.value, '.2f') + '%' : format(datum.value, '.1f') + '%'",
+      "as": "value_label"
+    },
+    { "calculate": "'Rank ' + datum.rank", "as": "rank_label" }
+  ],
+  "encoding": {
+    "x": {
+      "field": "measure",
+      "type": "nominal",
+      "sort": { "field": "measure_order" },
+      "title": null,
+      "axis": {
+        "orient": "top",
+        "domain": false,
+        "ticks": false,
+        "labelAngle": 0,
+        "labelPadding": 22,
+        "labelFontWeight": 600,
+        "labelColor": "#1d2125",
+        "labelLimit": 200
+      }
+    },
+    "y": {
+      "field": "state",
+      "type": "nominal",
+      "sort": { "field": "state_sort", "op": "min", "order": "ascending" },
+      "title": null,
+      "axis": { "domain": false, "ticks": false, "labelPadding": 8, "labelLimit": 220 }
+    }
+  },
+  "layer": [
+    {
+      "mark": { "type": "rect", "stroke": "#ffffff", "strokeWidth": 2 },
+      "encoding": {
+        "color": {
+          "field": "rank",
+          "type": "ordinal",
+          "title": "Rank (1 = highest of 8)",
+          "scale": {
+            "domain": [1, 2, 3, 4, 5, 6, 7, 8],
+            "range": ["#08306b", "#08519c", "#2171b5", "#4292c6", "#6baed6", "#9ecae1", "#c6dbef", "#deebf7"]
+          },
+          "legend": { "orient": "bottom", "direction": "horizontal", "symbolType": "square", "titleLimit": 400, "offset": 34 }
+        },
+        "tooltip": [
+          { "field": "state", "title": "State or territory" },
+          { "field": "measure", "title": "Measure" },
+          { "field": "unit", "title": "Unit" },
+          { "field": "value_label", "title": "Value" },
+          { "field": "rank", "title": "Rank (1 = highest)" },
+          { "field": "avg_rank", "title": "Average rank, all four", "format": ".1f" }
+        ]
+      }
+    },
+    {
+      "mark": { "type": "text", "baseline": "middle", "dy": -7, "fontSize": 13, "fontWeight": 600 },
+      "encoding": {
+        "text": { "field": "value_label" },
+        "color": { "condition": { "test": "datum.rank <= 3", "value": "#ffffff" }, "value": "#1d2125" }
+      }
+    },
+    {
+      "mark": { "type": "text", "baseline": "middle", "dy": 9, "fontSize": 11 },
+      "encoding": {
+        "text": { "field": "rank_label" },
+        "color": { "condition": { "test": "datum.rank <= 3", "value": "#ffffff" }, "value": "#1d2125" }
+      }
+    },
+    {
+      "transform": [{ "filter": "datum.abbr === 'NSW'" }],
+      "mark": { "type": "text", "baseline": "bottom", "fontSize": 11, "color": "#5b6470" },
+      "encoding": {
+        "y": { "value": -6 },
+        "text": {
+          "condition": [
+            { "test": "datum.measure === 'Patent applications'", "value": "per 100,000 people, 2025" },
+            { "test": "datum.measure === 'Business R&D'", "value": "% of GSP, 2023–24" }
+          ],
+          "value": "% of businesses, 2024–25"
+        }
+      }
+    },
+    {
+      "data": { "values": [{}] },
+      "mark": { "type": "text", "align": "left", "baseline": "top", "fontSize": 12, "fontStyle": "italic", "color": "#1d2125" },
+      "encoding": {
+        "x": { "value": 0 },
+        "y": { "value": 352 },
+        "text": { "value": "The Northern Territory ranks 1st for innovation and AI use, but last for R&D and patents" }
+      }
+    }
+  ]
+}

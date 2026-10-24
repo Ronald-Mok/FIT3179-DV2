@@ -1,0 +1,95 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "C17 Bar chart: % of businesses reporting each barrier to innovation in the year ended 30 June 2025 (ABS CAB 2024-25, data cube 11 table 2), sorted largest first. Radio buttons switch between all businesses and each size class; bar colours follow the size colours used in Q4. 'Lack of skilled people' is the ABS 'in any location' total (inside the business or in the job market).",
+  "width": "container",
+  "height": 260,
+  "params": [
+    {
+      "name": "size",
+      "value": "All businesses",
+      "bind": {
+        "input": "radio",
+        "name": "Business size ",
+        "options": ["All businesses", "Micro (0–4 people)", "Small (5–19 people)", "Medium (20–199 people)", "Large (200+ people)"],
+        "labels": ["All", "Micro", "Small", "Medium", "Large"]
+      }
+    }
+  ],
+  "data": {
+    "url": "data/barriers_2024-25.csv",
+    "format": { "type": "csv", "parse": { "group_order": "number", "pct": "number", "any_barrier": "number" } }
+  },
+  "transform": [
+    { "filter": "datum.group === size" },
+    { "calculate": "datum.pct / 100", "as": "share" },
+    { "calculate": "datum.any_barrier / 100", "as": "any_share" }
+  ],
+  "encoding": {
+    "y": {
+      "field": "barrier",
+      "type": "nominal",
+      "sort": { "field": "pct", "op": "max", "order": "descending" },
+      "title": null,
+      "axis": { "domain": false, "ticks": false, "labelPadding": 8, "labelLimit": 260 }
+    },
+    "x": {
+      "field": "pct",
+      "type": "quantitative",
+      "title": "% of businesses reporting the barrier, 2024–25",
+      "scale": { "domain": [0, 25] },
+      "axis": { "values": [0, 5, 10, 15, 20, 25], "labelExpr": "datum.label + '%'", "grid": true }
+    }
+  },
+  "layer": [
+    {
+      "mark": { "type": "bar", "height": { "band": 0.7 }, "cornerRadiusEnd": 2 },
+      "encoding": {
+        "color": {
+          "field": "group",
+          "type": "nominal",
+          "scale": {
+            "domain": ["All businesses", "Micro (0–4 people)", "Small (5–19 people)", "Medium (20–199 people)", "Large (200+ people)"],
+            "range": ["#08519c", "#c9d3dd", "#93a5b8", "#5c7590", "#2e4560"]
+          },
+          "legend": null
+        },
+        "stroke": { "value": "#5c7590" },
+        "strokeWidth": { "condition": { "test": "datum.group === 'Micro (0–4 people)'", "value": 1 }, "value": 0 },
+        "tooltip": [
+          { "field": "group", "title": "Business size" },
+          { "field": "barrier", "title": "Barrier" },
+          { "field": "share", "title": "Businesses reporting it", "format": ".1%" },
+          { "field": "any_share", "title": "Reported any barrier", "format": ".1%" }
+        ]
+      }
+    },
+    {
+      "mark": { "type": "text", "align": "left", "baseline": "middle", "dx": 6, "fontSize": 12, "color": "#1d2125" },
+      "encoding": { "text": { "field": "pct", "type": "quantitative", "format": ".1f" } }
+    },
+    {
+      "transform": [
+        {
+          "window": [
+            { "op": "row_number", "as": "order" },
+            { "op": "lead", "field": "pct", "as": "next_pct" },
+            { "op": "lead", "field": "barrier", "as": "next_barrier" }
+          ],
+          "sort": [{ "field": "pct", "order": "descending" }]
+        },
+        { "filter": "datum.order === 1" },
+        { "calculate": "size === 'All businesses' ? 'all businesses' : lower(split(size, ' ')[0]) + ' businesses'", "as": "who" },
+        {
+          "calculate": "[datum.pct - datum.next_pct < 0.5 ? datum.barrier + ' (' + format(datum.pct, '.1f') + '%) and ' + lower(datum.next_barrier) + ' (' + format(datum.next_pct, '.1f') + '%) are level' : 'Top barrier: ' + lower(datum.barrier) + ' (' + format(datum.pct, '.1f') + '%)', format(datum.any_barrier, '.1f') + '% of ' + datum.who + ' reported at least one barrier']",
+          "as": "note"
+        }
+      ],
+      "mark": { "type": "text", "align": "left", "baseline": "top", "fontSize": 12, "fontStyle": "italic", "lineHeight": 16, "color": "#1d2125" },
+      "encoding": {
+        "x": { "value": 0 },
+        "y": { "value": 302 },
+        "text": { "field": "note" }
+      }
+    }
+  ]
+}

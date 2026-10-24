@@ -1,0 +1,284 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "C14 Line chart: % of Australian businesses that were innovation-active in each ABS innovation survey, 2006-07 to 2024-25 (DISR Australian Innovation Statistics, from ABS; 2024-25 from ABS CAB). Solid lines join years measured the same way. Dashed links cross the two method changes: new (Oslo Manual 2018) definitions from 2018-19, and a one-year question from 2024-25 instead of two years.",
+  "width": "container",
+  "height": 340,
+  "data": {
+    "url": "data/innovation_active_series.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "year_end": "number",
+        "innovation_active": "number"
+      }
+    }
+  },
+  "transform": [
+    {
+      "calculate": "replace(datum.year, '-', '–')",
+      "as": "year_label"
+    },
+    {
+      "calculate": "datum.innovation_active / 100",
+      "as": "share"
+    }
+  ],
+  "layer": [
+    {
+      "data": {
+        "values": [
+          {
+            "x": 2018,
+            "label": [
+              "New definitions",
+              "from 2018–19"
+            ]
+          },
+          {
+            "x": 2024,
+            "label": [
+              "One-year question",
+              "from 2024–25"
+            ]
+          }
+        ]
+      },
+      "encoding": {
+        "x": {
+          "field": "x",
+          "type": "quantitative",
+          "title": null,
+          "scale": {
+            "domain": [
+              2006.5,
+              2025.5
+            ],
+            "nice": false
+          }
+        }
+      },
+      "layer": [
+        {
+          "mark": {
+            "type": "rule",
+            "color": "#8a94a0",
+            "strokeDash": [
+              2,
+              3
+            ]
+          },
+          "encoding": {
+            "y": {
+              "value": 0
+            },
+            "y2": {
+              "value": 302
+            }
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "align": "center",
+            "baseline": "bottom",
+            "dy": -4,
+            "fontSize": 11,
+            "lineHeight": 14,
+            "color": "#5b6470"
+          },
+          "encoding": {
+            "y": {
+              "value": 336
+            },
+            "text": {
+              "field": "label"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "encoding": {
+        "x": {
+          "field": "year_end",
+          "type": "quantitative",
+          "title": null,
+          "scale": {
+            "domain": [
+              2006.5,
+              2025.5
+            ],
+            "nice": false
+          },
+          "axis": {
+            "values": [
+              2007,
+              2009,
+              2011,
+              2013,
+              2015,
+              2017,
+              2019,
+              2021,
+              2023,
+              2025
+            ],
+            "labelExpr": "(datum.value - 1) + '–' + format(datum.value % 100, '02')",
+            "grid": false,
+            "labelFontSize": 11
+          }
+        },
+        "y": {
+          "field": "innovation_active",
+          "type": "quantitative",
+          "title": "% of businesses innovation-active",
+          "scale": {
+            "domain": [
+              30,
+              56
+            ],
+            "nice": false
+          },
+          "axis": {
+            "values": [
+              30,
+              35,
+              40,
+              45,
+              50,
+              55
+            ],
+            "labelExpr": "datum.label + '%'"
+          }
+        }
+      },
+      "layer": [
+        {
+          "transform": [
+            {
+              "filter": "datum.year === '2016-17' || datum.year === '2018-19' || datum.year === '2022-23' || datum.year === '2024-25'"
+            },
+            {
+              "calculate": "datum.year_end <= 2019 ? 'a' : 'b'",
+              "as": "link"
+            }
+          ],
+          "mark": {
+            "type": "line",
+            "color": "#08519c",
+            "strokeWidth": 2,
+            "strokeDash": [
+              5,
+              4
+            ],
+            "opacity": 0.7
+          },
+          "encoding": {
+            "detail": {
+              "field": "link"
+            }
+          }
+        },
+        {
+          "transform": [
+            {
+              "filter": "datum.method !== 'One-year question'"
+            }
+          ],
+          "mark": {
+            "type": "line",
+            "color": "#08519c",
+            "strokeWidth": 3
+          },
+          "encoding": {
+            "detail": {
+              "field": "method"
+            }
+          }
+        },
+        {
+          "mark": {
+            "type": "point",
+            "filled": true,
+            "size": 70,
+            "color": "#08519c",
+            "stroke": "#ffffff",
+            "strokeWidth": 1.5,
+            "opacity": 1
+          },
+          "encoding": {
+            "tooltip": [
+              {
+                "field": "year_label",
+                "title": "Survey year"
+              },
+              {
+                "field": "share",
+                "title": "Innovation-active",
+                "format": ".1%"
+              },
+              {
+                "field": "method",
+                "title": "How it was measured"
+              },
+              {
+                "field": "source",
+                "title": "Original source"
+              }
+            ]
+          }
+        },
+        {
+          "transform": [
+            {
+              "filter": "datum.year === '2006-07' || datum.year === '2024-25'"
+            },
+            {
+              "calculate": "format(datum.innovation_active, '.1f') + '%'",
+              "as": "label"
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "baseline": "bottom",
+            "dy": -9,
+            "fontSize": 12,
+            "fontWeight": 600,
+            "color": "#08519c"
+          },
+          "encoding": {
+            "text": {
+              "field": "label"
+            }
+          }
+        },
+        {
+          "transform": [
+            {
+              "filter": "datum.year === '2020-21'"
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "align": "right",
+            "baseline": "middle",
+            "dx": -12,
+            "dy": -12,
+            "fontSize": 12,
+            "fontStyle": "italic",
+            "lineHeight": 15,
+            "color": "#1d2125"
+          },
+          "encoding": {
+            "text": {
+              "value": [
+                "51.9% in 2020–21, when COVID-19 pushed",
+                "businesses to change how they worked"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

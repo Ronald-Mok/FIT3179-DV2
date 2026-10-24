@@ -34,7 +34,7 @@
         "format": { "type": "csv", "parse": { "lon": "number", "lat": "number" } }
       },
       "transform": [{ "filter": "zoom === 'All' || datum.state === zoom" }],
-      "mark": { "type": "circle", "size": { "expr": "zoom === 'All' ? 9 : 16" }, "color": "#54278f", "opacity": 0.4 },
+      "mark": { "type": "circle", "size": { "expr": "zoom === 'All' ? 9 : 16" }, "color": "#08519c", "opacity": 0.4 },
       "encoding": {
         "longitude": { "field": "lon", "type": "quantitative" },
         "latitude": { "field": "lat", "type": "quantitative" },

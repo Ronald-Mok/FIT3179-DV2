@@ -1,0 +1,141 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "C16 Slope chart: business R&D spending (BERD) as a % of GDP, from a chosen start year (2008, 2013 or 2017) to 2023, for Australia, the OECD average and eight comparison countries (OECD Main Science and Technology Indicators). Australia's figures are financial years, labelled by their first year (2023 = 2023-24). Label positions are nudged apart in the data so close values stay readable; tooltips show the exact values.",
+  "width": "container",
+  "height": 360,
+  "params": [
+    {
+      "name": "startYear",
+      "value": 2017,
+      "bind": {
+        "input": "radio",
+        "name": "Compare 2023 with ",
+        "options": [2008, 2013, 2017],
+        "labels": ["2008 (Australia's peak)", "2013", "2017"]
+      }
+    }
+  ],
+  "data": {
+    "url": "data/berd_gdp_countries.csv",
+    "format": { "type": "csv", "parse": { "start_year": "number", "year": "number", "value": "number", "label_pos": "number" } }
+  },
+  "transform": [
+    { "filter": "datum.start_year === startYear" },
+    { "calculate": "datum.code === 'AUS' ? 'Australia' : datum.code === 'OECD' ? 'OECD' : 'Other'", "as": "group" },
+    { "calculate": "datum.value / 100", "as": "share" }
+  ],
+  "encoding": {
+    "x": {
+      "field": "side",
+      "type": "ordinal",
+      "title": null,
+      "sort": ["start", "end"],
+      "scale": { "type": "point", "padding": 1.1 },
+      "axis": {
+        "orient": "top",
+        "domain": false,
+        "ticks": false,
+        "labelAngle": 0,
+        "labelPadding": 10,
+        "labelFontWeight": 600,
+        "labelColor": "#1d2125",
+        "labelExpr": "datum.label === 'start' ? '' + startYear : '2023'"
+      }
+    },
+    "y": {
+      "field": "value",
+      "type": "quantitative",
+      "title": null,
+      "scale": { "domain": [0, 4.2], "nice": false },
+      "axis": null
+    }
+  },
+  "layer": [
+    {
+      "params": [
+        {
+          "name": "hover",
+          "select": { "type": "point", "fields": ["code"], "on": "pointerover", "clear": "pointerout" }
+        }
+      ],
+      "transform": [{ "filter": "datum.group === 'Other'" }],
+      "mark": { "type": "line", "strokeWidth": 1.5 },
+      "encoding": {
+        "detail": { "field": "code" },
+        "color": { "condition": { "param": "hover", "empty": false, "value": "#1d2125" }, "value": "#b4bac2" }
+      }
+    },
+    {
+      "transform": [{ "filter": "datum.group === 'OECD'" }],
+      "mark": { "type": "line", "color": "#1d2125", "strokeWidth": 2.5, "strokeDash": [6, 4] },
+      "encoding": { "detail": { "field": "code" } }
+    },
+    {
+      "transform": [{ "filter": "datum.group === 'Australia'" }],
+      "mark": { "type": "line", "color": "#d55e00", "strokeWidth": 4 },
+      "encoding": { "detail": { "field": "code" } }
+    },
+    {
+      "mark": { "type": "circle", "opacity": 1, "stroke": "#ffffff", "strokeWidth": 1.5 },
+      "encoding": {
+        "color": {
+          "field": "group",
+          "type": "nominal",
+          "scale": { "domain": ["Australia", "OECD", "Other"], "range": ["#d55e00", "#1d2125", "#8a94a0"] },
+          "legend": null
+        },
+        "size": { "condition": { "test": "datum.group === 'Other'", "value": 50 }, "value": 110 },
+        "tooltip": [
+          { "field": "country", "title": "Country" },
+          { "field": "year", "title": "Year" },
+          { "field": "share", "title": "Business R&D, % of GDP", "format": ".2%" }
+        ]
+      }
+    },
+    {
+      "transform": [
+        { "filter": "datum.side === 'start'" },
+        { "calculate": "datum.country + '  ' + format(datum.value, '.2f') + '%'", "as": "label" }
+      ],
+      "encoding": { "y": { "field": "label_pos", "type": "quantitative" }, "text": { "field": "label" } },
+      "layer": [
+        {
+          "transform": [{ "filter": "datum.group !== 'Other'" }],
+          "mark": { "type": "text", "align": "right", "baseline": "middle", "dx": -12, "fontSize": 12, "fontWeight": 700 },
+          "encoding": { "color": { "field": "group", "type": "nominal", "legend": null } }
+        },
+        {
+          "transform": [{ "filter": "datum.group === 'Other'" }],
+          "mark": { "type": "text", "align": "right", "baseline": "middle", "dx": -12, "fontSize": 12, "color": "#5b6470" }
+        }
+      ]
+    },
+    {
+      "transform": [
+        { "filter": "datum.side === 'end'" },
+        { "calculate": "format(datum.value, '.2f') + '%  ' + datum.country", "as": "label" }
+      ],
+      "encoding": { "y": { "field": "label_pos", "type": "quantitative" }, "text": { "field": "label" } },
+      "layer": [
+        {
+          "transform": [{ "filter": "datum.group !== 'Other'" }],
+          "mark": { "type": "text", "align": "left", "baseline": "middle", "dx": 12, "fontSize": 12, "fontWeight": 700 },
+          "encoding": { "color": { "field": "group", "type": "nominal", "legend": null } }
+        },
+        {
+          "transform": [{ "filter": "datum.group === 'Other'" }],
+          "mark": { "type": "text", "align": "left", "baseline": "middle", "dx": 12, "fontSize": 12, "color": "#5b6470" }
+        }
+      ]
+    },
+    {
+      "transform": [{ "filter": "datum.code === 'AUS' && datum.side === 'start'" }],
+      "mark": { "type": "text", "align": "left", "baseline": "top", "fontSize": 12, "fontStyle": "italic", "color": "#1d2125" },
+      "encoding": {
+        "x": { "value": 0 },
+        "y": { "value": 372 },
+        "text": { "field": "note" }
+      }
+    }
+  ]
+}

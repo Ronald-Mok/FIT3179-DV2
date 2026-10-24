@@ -39,7 +39,7 @@
           "title": "Applications per hexagon",
           "scale": {
             "domain": ["1–9", "10–99", "100–999", "1,000–9,999", "10,000 or more"],
-            "range": ["#dadaeb", "#bcbddc", "#9e9ac8", "#756bb1", "#54278f"]
+            "range": ["#bdd7e7", "#6baed6", "#3182bd", "#08519c", "#08306b"]
           },
           "legend": { "orient": "top", "direction": "horizontal", "symbolType": "square", "titleLimit": 300 }
         },
@@ -67,7 +67,7 @@
     },
     {
       "description": "Invisible point in the Tasman Sea so the projection leaves room for the coast labels.",
-      "data": { "values": [{ "lon": 160.5, "lat": -27 }] },
+      "data": { "values": [{ "lon": 162, "lat": -27 }] },
       "mark": { "type": "point", "opacity": 0 },
       "encoding": {
         "longitude": { "field": "lon", "type": "quantitative" },
@@ -78,16 +78,26 @@
       "data": { "url": "data/geo/tm_hexbins_2025.json", "format": { "type": "json", "property": "features" } },
       "transform": [
         { "filter": "indexof(['Gold Coast', 'Sunshine Coast'], datum.properties.place) >= 0" },
-        { "calculate": "datum.properties.place + ' ' + format(datum.properties.count, ',')", "as": "label" },
+        { "calculate": "[datum.properties.place, format(datum.properties.count, ',')]", "as": "label" },
+        { "calculate": "datum.properties.place", "as": "place" },
         { "calculate": "datum.properties.lon", "as": "lon" },
         { "calculate": "datum.properties.lat", "as": "lat" }
       ],
-      "mark": { "type": "text", "align": "left", "baseline": "middle", "dx": 12, "fontSize": 12, "fontWeight": 600, "color": "#1d2125" },
       "encoding": {
         "longitude": { "field": "lon", "type": "quantitative" },
         "latitude": { "field": "lat", "type": "quantitative" },
         "text": { "field": "label" }
-      }
+      },
+      "layer": [
+        {
+          "transform": [{ "filter": "datum.place === 'Sunshine Coast'" }],
+          "mark": { "type": "text", "align": "left", "baseline": "bottom", "dx": 12, "dy": -2, "fontSize": 12, "lineHeight": 14, "fontWeight": 600, "color": "#1d2125" }
+        },
+        {
+          "transform": [{ "filter": "datum.place === 'Gold Coast'" }],
+          "mark": { "type": "text", "align": "left", "baseline": "top", "dx": 12, "dy": 2, "fontSize": 12, "lineHeight": 14, "fontWeight": 600, "color": "#1d2125" }
+        }
+      ]
     },
     {
       "data": { "url": "data/geo/tm_hexbins_2025.json", "format": { "type": "json", "property": "features" } },

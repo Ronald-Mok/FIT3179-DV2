@@ -7,9 +7,9 @@ const PALETTE = {
   rule: "#e3e5e8",
   context: "#c8ccd2",
   accent: "#d55e00", // Australia / focus
-  goods: "#0072b2", // goods & services innovation
+  goods: "#e69f00", // goods & services innovation (Okabe–Ito orange)
   process: "#009e73", // process innovation
-  seq: ["#efedf5", "#cbc9e2", "#9e9ac8", "#756bb1", "#54278f"],
+  seq: ["#eff3ff", "#bdd7e7", "#6baed6", "#3182bd", "#08519c"], // ColorBrewer Blues
   size: ["#c9d3dd", "#93a5b8", "#5c7590", "#2e4560"] // Micro → Large
 };
 
@@ -66,12 +66,12 @@ const CHARTS = [
   { id: "c10", spec: "charts/c10_choropleth_states.vl.json" }, // S5 State choropleth (Task 5)
   { id: "c11", spec: "charts/c11_dot_map.vl.json" }, // S5 Dot map (Task 5)
   { id: "c12", spec: "charts/c12_hexbin_map.vl.json" }, // S5 Bin map (Task 5)
-  { id: "c13", spec: null }, // S5 Scorecard heatmap (Task 5)
-  { id: "c14", spec: null }, // S6 Line chart (Task 6)
-  { id: "c15", spec: null }, // S6 Bump chart (Task 6)
-  { id: "c16", spec: null }, // S6 Slope chart (Task 6)
-  { id: "c17", spec: null }, // S7 Bar chart (Task 7)
-  { id: "c18", spec: null } // S7 Dumbbell (Task 7)
+  { id: "c13", spec: "charts/c13_scorecard.vl.json" }, // S5 Scorecard heatmap (Task 5)
+  { id: "c14", spec: "charts/c14_line.vl.json" }, // S6 Line chart (Task 6)
+  { id: "c15", spec: "charts/c15_bump.vl.json" }, // S6 Bump chart (Task 6)
+  { id: "c16", spec: "charts/c16_slope.vl.json" }, // S6 Slope chart (Task 6)
+  { id: "c17", spec: "charts/c17_bar.vl.json" }, // S7 Bar chart (Task 7)
+  { id: "c18", spec: "charts/c18_dumbbell.vl.json" } // S7 Dumbbell (Task 7)
 ];
 
 // "no-cache" makes the browser check for newer specs and data on every load,

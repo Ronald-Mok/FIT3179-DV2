@@ -310,10 +310,10 @@
             },
             "color": {
               "condition": {
-                "test": "datum.value >= 38",
+                "test": "datum.value >= 46",
                 "value": "#ffffff"
               },
-              "value": "#1d2125"
+              "value": "#000000"
             },
             "opacity": {
               "condition": {
@@ -453,10 +453,10 @@
             },
             "color": {
               "condition": {
-                "test": "datum.value >= 38",
+                "test": "datum.value >= 46",
                 "value": "#ffffff"
               },
-              "value": "#1d2125"
+              "value": "#000000"
             },
             "opacity": {
               "condition": {
@@ -596,10 +596,10 @@
             },
             "color": {
               "condition": {
-                "test": "datum.value >= 38",
+                "test": "datum.value >= 46",
                 "value": "#ffffff"
               },
-              "value": "#1d2125"
+              "value": "#000000"
             },
             "opacity": {
               "condition": {

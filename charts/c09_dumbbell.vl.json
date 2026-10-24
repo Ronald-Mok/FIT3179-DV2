@@ -128,7 +128,7 @@
                 ],
                 "range": [
                   "#8a94a0",
-                  "#54278f"
+                  "#08519c"
                 ]
               },
               "legend": {
@@ -198,7 +198,7 @@
             "dx": 12,
             "fontSize": 11,
             "fontWeight": 600,
-            "color": "#54278f"
+            "color": "#08519c"
           },
           "encoding": {
             "x": {

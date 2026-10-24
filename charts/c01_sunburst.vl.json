@@ -79,7 +79,7 @@
           "type": "nominal",
           "scale": {
             "domain": ["Goods and services innovation", "Process innovation"],
-            "range": ["#0072b2", "#009e73"]
+            "range": ["#e69f00", "#009e73"]
           },
           "legend": null
         },
@@ -129,7 +129,7 @@
         "fontSize": 13,
         "fontWeight": 500,
         "lineBreak": "|",
-        "color": "#ffffff"
+        "color": "#1d2125"
       },
       "encoding": {
         "theta": {
