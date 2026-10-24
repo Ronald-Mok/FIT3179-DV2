@@ -506,3 +506,47 @@ a {
     font-size: 40px;
   }
 }
+
+/* ---------- Hero background ---------- */
+
+.hero {
+  background-color: #faf7ef;
+  background-image:
+    linear-gradient(
+      to right,
+      rgba(250, 247, 239, 0.98) 0%,
+      rgba(250, 247, 239, 0.9) 40%,
+      rgba(250, 247, 239, 0.35) 65%,
+      rgba(250, 247, 239, 0) 100%
+    ),
+    url("../img/innovation-hero.png");
+  background-size: cover;
+  background-position: center right;
+  background-repeat: no-repeat;
+}
+
+/* Keep the text within the quieter part of the image. */
+.hero h1,
+.hero-sub,
+.hero-intro,
+.hero .byline {
+  max-width: 640px;
+}
+
+.hero .toc ol {
+  max-width: 640px;
+  grid-template-columns: 1fr;
+}
+
+/* A stronger overlay keeps text readable on smaller screens. */
+@media (max-width: 900px) {
+  .hero {
+    padding: 72px 0 64px;
+    background-image:
+      linear-gradient(
+        rgba(250, 247, 239, 0.92),
+        rgba(250, 247, 239, 0.92)
+      ),
+      url("../img/innovation-hero.png");
+  }
+}
