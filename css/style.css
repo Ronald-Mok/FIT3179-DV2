@@ -432,6 +432,7 @@ a {
   font-size: 13px;
   color: var(--ink-muted);
   margin-top: 12px;
+  max-width: 65ch; /* keeps notes under full-width charts to a readable line length */
 }
 
 /* ---------- About ---------- */

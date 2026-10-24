@@ -52,7 +52,7 @@
             "size": {
               "field": "avg_share",
               "type": "quantitative",
-              "title": ["Average share of world", "patents, papers and VC deals"],
+              "title": ["Average share of world patents,", "articles and venture capital deals"],
               "scale": { "type": "linear", "zero": true, "range": [0, 1600] },
               "legend": {
                 "orient": "bottom-left",
