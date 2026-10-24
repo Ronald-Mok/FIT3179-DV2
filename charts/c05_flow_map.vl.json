@@ -1,0 +1,143 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "C5 Flow map (world): patent applications filed abroad by Australian applicants, to the 15 largest destination offices (WIPO, total applications = direct + PCT national phase). Line width and circle area = applications. Lines start at the centre of Australia (Geoscience Australia's Lambert Gravitational Centre, 134.354 E, 25.610 S) and end at each office's capital city (the EPO at its Munich headquarters). A slider picks the year, 2015-2024. Pacific-centred Equal Earth projection, so no line crosses the map edge.",
+  "width": "container",
+  "height": 470,
+  "params": [
+    {
+      "name": "year",
+      "value": 2024,
+      "bind": { "input": "range", "min": 2015, "max": 2024, "step": 1, "name": "Year " }
+    }
+  ],
+  "projection": { "type": "equalEarth", "rotate": [-150, 0, 0] },
+  "layer": [
+    {
+      "data": {
+        "url": "data/geo/world_110m.topojson",
+        "format": { "type": "topojson", "feature": "countries" }
+      },
+      "mark": { "type": "geoshape", "fill": "#e3e5e8", "stroke": "#ffffff", "strokeWidth": 0.5 }
+    },
+    {
+      "data": {
+        "url": "data/patents_abroad.csv",
+        "format": {
+          "type": "csv",
+          "parse": {
+            "dest_lon": "number",
+            "dest_lat": "number",
+            "year": "number",
+            "applications": "number",
+            "total_abroad": "number"
+          }
+        }
+      },
+      "transform": [
+        { "filter": "datum.year == year" },
+        { "calculate": "134.354", "as": "origin_lon" },
+        { "calculate": "-25.610", "as": "origin_lat" },
+        { "calculate": "datum.applications / datum.total_abroad", "as": "share" }
+      ],
+      "resolve": { "legend": { "size": "independent", "strokeWidth": "independent" } },
+      "layer": [
+        {
+          "mark": { "type": "rule", "color": "#d55e00", "opacity": 0.55, "strokeCap": "round" },
+          "encoding": {
+            "longitude": { "field": "origin_lon", "type": "quantitative" },
+            "latitude": { "field": "origin_lat", "type": "quantitative" },
+            "longitude2": { "field": "dest_lon" },
+            "latitude2": { "field": "dest_lat" },
+            "strokeWidth": {
+              "field": "applications",
+              "type": "quantitative",
+              "title": "Patent applications",
+              "scale": { "domain": [0, 3600], "range": [0.5, 16] },
+              "legend": {
+                "orient": "bottom-left",
+                "values": [100, 1000, 3000],
+                "labelExpr": "format(datum.value, ',')",
+                "titleLimit": 220,
+                "symbolType": "stroke",
+                "symbolStrokeColor": "#d55e00"
+              }
+            },
+            "tooltip": [
+              { "field": "office", "title": "Filing office" },
+              { "field": "year", "title": "Year" },
+              { "field": "applications", "title": "Applications from Australia", "format": "," },
+              { "field": "share", "title": "Share of all filed abroad", "format": ".1%" }
+            ]
+          }
+        },
+        {
+          "mark": { "type": "circle", "color": "#3d4652", "opacity": 0.85, "stroke": "#ffffff", "strokeWidth": 0.8 },
+          "encoding": {
+            "longitude": { "field": "dest_lon", "type": "quantitative" },
+            "latitude": { "field": "dest_lat", "type": "quantitative" },
+            "size": {
+              "field": "applications",
+              "type": "quantitative",
+              "scale": { "domain": [0, 3600], "range": [0, 500] },
+              "legend": null
+            },
+            "tooltip": [
+              { "field": "office", "title": "Filing office" },
+              { "field": "year", "title": "Year" },
+              { "field": "applications", "title": "Applications from Australia", "format": "," },
+              { "field": "share", "title": "Share of all filed abroad", "format": ".1%" }
+            ]
+          }
+        },
+        {
+          "transform": [
+            { "filter": "indexof(['United States', 'Japan', 'New Zealand'], datum.destination) >= 0" },
+            { "calculate": "datum.destination + ' · ' + format(datum.applications, ',')", "as": "label" }
+          ],
+          "mark": { "type": "text", "align": "left", "baseline": "middle", "dx": 12, "fontSize": 11, "fontWeight": 600, "color": "#3d4652" },
+          "encoding": {
+            "longitude": { "field": "dest_lon", "type": "quantitative" },
+            "latitude": { "field": "dest_lat", "type": "quantitative" },
+            "text": { "field": "label" }
+          }
+        },
+        {
+          "transform": [
+            { "filter": "indexof(['European Patent Office', 'China'], datum.destination) >= 0" },
+            { "calculate": "datum.destination + ' · ' + format(datum.applications, ',')", "as": "label" }
+          ],
+          "mark": { "type": "text", "align": "right", "baseline": "middle", "dx": -12, "fontSize": 11, "fontWeight": 600, "color": "#3d4652" },
+          "encoding": {
+            "longitude": { "field": "dest_lon", "type": "quantitative" },
+            "latitude": { "field": "dest_lat", "type": "quantitative" },
+            "text": { "field": "label" }
+          }
+        },
+        {
+          "transform": [
+            { "aggregate": [{ "op": "max", "field": "total_abroad", "as": "total" }, { "op": "sum", "field": "applications", "as": "top15" }] },
+            { "calculate": "format(datum.total, ',') + ' applications filed abroad in ' + year", "as": "line1" },
+            { "calculate": "format(datum.top15 / datum.total, '.0%') + ' went to these 15 offices'", "as": "line2" },
+            { "calculate": "datum.line1 + '|' + datum.line2", "as": "label" },
+            { "calculate": "134.354", "as": "origin_lon" },
+            { "calculate": "-25.610", "as": "origin_lat" }
+          ],
+          "mark": { "type": "text", "align": "right", "baseline": "top", "dx": -16, "dy": 30, "fontSize": 12, "fontWeight": 600, "lineBreak": "|", "color": "#d55e00" },
+          "encoding": {
+            "longitude": { "field": "origin_lon", "type": "quantitative" },
+            "latitude": { "field": "origin_lat", "type": "quantitative" },
+            "text": { "field": "label" }
+          }
+        }
+      ]
+    },
+    {
+      "data": { "values": [{ "name": "Australia", "lon": 134.354, "lat": -25.61 }] },
+      "mark": { "type": "circle", "size": 70, "color": "#d55e00", "opacity": 1, "stroke": "#ffffff", "strokeWidth": 1 },
+      "encoding": {
+        "longitude": { "field": "lon", "type": "quantitative" },
+        "latitude": { "field": "lat", "type": "quantitative" }
+      }
+    }
+  ]
+}

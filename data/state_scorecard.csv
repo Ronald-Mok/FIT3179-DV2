@@ -1,0 +1,33 @@
+state,abbr,measure,measure_order,unit,value,rank,count
+New South Wales,NSW,Innovation-active,0,"% of businesses, 2024–25",44.5,7,
+Victoria,VIC,Innovation-active,0,"% of businesses, 2024–25",47,3,
+Queensland,QLD,Innovation-active,0,"% of businesses, 2024–25",45,5,
+South Australia,SA,Innovation-active,0,"% of businesses, 2024–25",50.9,2,
+Western Australia,WA,Innovation-active,0,"% of businesses, 2024–25",45,6,
+Tasmania,TAS,Innovation-active,0,"% of businesses, 2024–25",45.5,4,
+Northern Territory,NT,Innovation-active,0,"% of businesses, 2024–25",62.9,1,
+Australian Capital Territory,ACT,Innovation-active,0,"% of businesses, 2024–25",35.3,8,
+New South Wales,NSW,Using AI,1,"% of businesses, 2024–25",12.7,4,
+Victoria,VIC,Using AI,1,"% of businesses, 2024–25",13.1,3,
+Queensland,QLD,Using AI,1,"% of businesses, 2024–25",11.6,5,
+South Australia,SA,Using AI,1,"% of businesses, 2024–25",8.4,8,
+Western Australia,WA,Using AI,1,"% of businesses, 2024–25",9.8,6,
+Tasmania,TAS,Using AI,1,"% of businesses, 2024–25",17.2,2,
+Northern Territory,NT,Using AI,1,"% of businesses, 2024–25",17.8,1,
+Australian Capital Territory,ACT,Using AI,1,"% of businesses, 2024–25",8.6,7,
+New South Wales,NSW,Business R&D,2,"% of state economy (GSP), 2023–24",1.17,1,
+Victoria,VIC,Business R&D,2,"% of state economy (GSP), 2023–24",1.15,2,
+Queensland,QLD,Business R&D,2,"% of state economy (GSP), 2023–24",0.59,5,
+South Australia,SA,Business R&D,2,"% of state economy (GSP), 2023–24",0.68,4,
+Western Australia,WA,Business R&D,2,"% of state economy (GSP), 2023–24",0.43,6,
+Tasmania,TAS,Business R&D,2,"% of state economy (GSP), 2023–24",0.85,3,
+Northern Territory,NT,Business R&D,2,"% of state economy (GSP), 2023–24",0.17,8,
+Australian Capital Territory,ACT,Business R&D,2,"% of state economy (GSP), 2023–24",0.39,7,
+New South Wales,NSW,Patent applications,3,"per 100,000 people, 2025",13.26,2,1139
+Victoria,VIC,Patent applications,3,"per 100,000 people, 2025",8.98,4,634
+Queensland,QLD,Patent applications,3,"per 100,000 people, 2025",8.89,5,504
+South Australia,SA,Patent applications,3,"per 100,000 people, 2025",6.89,6,131
+Western Australia,WA,Patent applications,3,"per 100,000 people, 2025",9.85,3,300
+Tasmania,TAS,Patent applications,3,"per 100,000 people, 2025",3.81,7,22
+Northern Territory,NT,Patent applications,3,"per 100,000 people, 2025",2.63,8,7
+Australian Capital Territory,ACT,Patent applications,3,"per 100,000 people, 2025",14.24,1,69

@@ -1,0 +1,268 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "C9 Dumbbell chart: % of businesses using artificial intelligence (AI) in 2024-25, innovation-active vs not innovation-active, for all businesses and each size class (ABS). The line between the two dots is the gap.",
+  "width": "container",
+  "height": 250,
+  "data": {
+    "url": "data/ai_by_size_2024-25.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "order": "number",
+        "ai_innovation_active": "number",
+        "ai_not_innovation_active": "number",
+        "ai_all_businesses": "number"
+      }
+    }
+  },
+  "transform": [
+    {
+      "calculate": "datum.ai_innovation_active / datum.ai_not_innovation_active",
+      "as": "ratio"
+    }
+  ],
+  "encoding": {
+    "y": {
+      "field": "size",
+      "type": "nominal",
+      "sort": {
+        "field": "order"
+      },
+      "title": null,
+      "axis": {
+        "domain": false,
+        "ticks": false,
+        "labelPadding": 8,
+        "labelLimit": 200,
+        "labelFontWeight": {
+          "condition": {
+            "test": "datum.value === 'All businesses'",
+            "value": 700
+          },
+          "value": 400
+        }
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "rule",
+        "color": "#c8ccd2",
+        "strokeWidth": 3
+      },
+      "encoding": {
+        "x": {
+          "field": "ai_not_innovation_active",
+          "type": "quantitative",
+          "title": "% of businesses using AI, 2024–25",
+          "scale": {
+            "domain": [
+              0,
+              40
+            ]
+          },
+          "axis": {
+            "values": [
+              0,
+              10,
+              20,
+              30,
+              40
+            ],
+            "labelExpr": "datum.label + '%'"
+          }
+        },
+        "x2": {
+          "field": "ai_innovation_active"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "fold": [
+            "ai_not_innovation_active",
+            "ai_innovation_active"
+          ],
+          "as": [
+            "status_key",
+            "pct"
+          ]
+        },
+        {
+          "calculate": "datum.status_key === 'ai_innovation_active' ? 'Innovation-active' : 'Not innovation-active'",
+          "as": "status"
+        },
+        {
+          "calculate": "datum.pct / 100",
+          "as": "share"
+        },
+        {
+          "calculate": "datum.ai_all_businesses / 100",
+          "as": "all_share"
+        }
+      ],
+      "layer": [
+        {
+          "mark": {
+            "type": "circle",
+            "size": 170,
+            "opacity": 1,
+            "stroke": "#ffffff",
+            "strokeWidth": 1.5
+          },
+          "encoding": {
+            "x": {
+              "field": "pct",
+              "type": "quantitative"
+            },
+            "color": {
+              "field": "status",
+              "type": "nominal",
+              "title": null,
+              "scale": {
+                "domain": [
+                  "Not innovation-active",
+                  "Innovation-active"
+                ],
+                "range": [
+                  "#8a94a0",
+                  "#54278f"
+                ]
+              },
+              "legend": {
+                "orient": "top",
+                "direction": "horizontal",
+                "symbolType": "circle"
+              }
+            },
+            "tooltip": [
+              {
+                "field": "size",
+                "title": "Business size"
+              },
+              {
+                "field": "status",
+                "title": "Group"
+              },
+              {
+                "field": "share",
+                "title": "Using AI",
+                "format": ".0%"
+              },
+              {
+                "field": "all_share",
+                "title": "All businesses this size using AI",
+                "format": ".1%"
+              }
+            ]
+          }
+        },
+        {
+          "transform": [
+            {
+              "filter": "datum.status === 'Not innovation-active'"
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "align": "right",
+            "baseline": "middle",
+            "dx": -12,
+            "fontSize": 11,
+            "color": "#5b6470"
+          },
+          "encoding": {
+            "x": {
+              "field": "pct",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "pct",
+              "type": "quantitative",
+              "format": ".0f"
+            }
+          }
+        },
+        {
+          "transform": [
+            {
+              "filter": "datum.status === 'Innovation-active'"
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "baseline": "middle",
+            "dx": 12,
+            "fontSize": 11,
+            "fontWeight": 600,
+            "color": "#54278f"
+          },
+          "encoding": {
+            "x": {
+              "field": "pct",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "pct",
+              "type": "quantitative",
+              "format": ".0f"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.size === 'Small (5–19 people)'"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "dx": 34,
+        "fontSize": 11,
+        "fontStyle": "italic",
+        "color": "#1d2125"
+      },
+      "encoding": {
+        "x": {
+          "field": "ai_innovation_active",
+          "type": "quantitative"
+        },
+        "text": {
+          "value": "Biggest gap: almost 5×"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.size === 'Large (200+ people)'"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "baseline": "middle",
+        "dx": -34,
+        "fontSize": 11,
+        "fontStyle": "italic",
+        "color": "#1d2125"
+      },
+      "encoding": {
+        "x": {
+          "field": "ai_not_innovation_active",
+          "type": "quantitative"
+        },
+        "text": {
+          "value": "Smallest gap"
+        }
+      }
+    }
+  ]
+}

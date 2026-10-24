@@ -1,0 +1,111 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "C2 Waffle chart: if Australia had 100 businesses, how many were innovation-active in 2024-25. Each square is one business in 100. The drop-down switches between all businesses and each business size.",
+  "params": [
+    {
+      "name": "size",
+      "value": "All businesses",
+      "bind": {
+        "input": "select",
+        "name": "Business size ",
+        "options": [
+          "All businesses",
+          "Micro (0–4 people)",
+          "Small (5–19 people)",
+          "Medium (20–199 people)",
+          "Large (200+ people)"
+        ]
+      }
+    }
+  ],
+  "data": { "sequence": { "start": 0, "stop": 100, "as": "i" } },
+  "transform": [
+    { "calculate": "size", "as": "group" },
+    {
+      "lookup": "group",
+      "from": {
+        "data": {
+          "url": "data/innovation_status_2024-25.csv",
+          "format": {
+            "type": "csv",
+            "parse": { "innovating": "number", "innovation_active": "number" }
+          }
+        },
+        "key": "group",
+        "fields": ["innovating", "innovation_active"]
+      }
+    },
+    { "calculate": "round(datum.innovating)", "as": "n_introduced" },
+    { "calculate": "round(datum.innovation_active)", "as": "n_active" },
+    {
+      "calculate": "datum.i < datum.n_introduced ? 'Introduced an innovation' : datum.i < datum.n_active ? 'Still working on one' : 'Not innovation-active'",
+      "as": "status"
+    },
+    { "joinaggregate": [{ "op": "count", "as": "n" }], "groupby": ["status"] },
+    { "calculate": "floor(datum.i / 10)", "as": "col" },
+    { "calculate": "datum.i % 10", "as": "row" }
+  ],
+  "spacing": 28,
+  "hconcat": [
+    {
+      "width": 300,
+      "height": 300,
+      "mark": { "type": "rect", "cornerRadius": 3 },
+      "encoding": {
+        "x": { "field": "col", "type": "ordinal", "axis": null, "scale": { "paddingInner": 0.15 } },
+        "y": { "field": "row", "type": "ordinal", "axis": null, "scale": { "paddingInner": 0.15 } },
+        "color": {
+          "field": "status",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Introduced an innovation", "Still working on one", "Not innovation-active"],
+            "range": ["#54278f", "#9e9ac8", "#e3e5e8"]
+          },
+          "legend": null
+        },
+        "tooltip": [
+          { "field": "group", "title": "Businesses" },
+          { "field": "status", "title": "Status" },
+          { "field": "n", "title": "Out of every 100" }
+        ]
+      }
+    },
+    {
+      "width": 240,
+      "height": 96,
+      "transform": [
+        { "aggregate": [{ "op": "count", "as": "n" }], "groupby": ["status"] },
+        {
+          "calculate": "indexof(['Introduced an innovation', 'Still working on one', 'Not innovation-active'], datum.status)",
+          "as": "order"
+        },
+        {
+          "calculate": "datum.order == 0 ? datum.n + ' introduced an innovation' : datum.order == 1 ? datum.n + ' were still working on one' : datum.n + ' were not innovation-active'",
+          "as": "label"
+        }
+      ],
+      "encoding": { "y": { "field": "order", "type": "ordinal", "axis": null } },
+      "layer": [
+        {
+          "mark": { "type": "square", "size": 220, "opacity": 1 },
+          "encoding": {
+            "x": { "value": 9 },
+            "color": {
+              "field": "status",
+              "type": "nominal",
+              "scale": {
+                "domain": ["Introduced an innovation", "Still working on one", "Not innovation-active"],
+                "range": ["#54278f", "#9e9ac8", "#e3e5e8"]
+              },
+              "legend": null
+            }
+          }
+        },
+        {
+          "mark": { "type": "text", "align": "left", "baseline": "middle", "fontSize": 14 },
+          "encoding": { "x": { "value": 26 }, "text": { "field": "label" } }
+        }
+      ]
+    }
+  ]
+}

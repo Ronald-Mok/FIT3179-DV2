@@ -1,0 +1,111 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "C12 Bin map: 2025 trade mark applications by Australian applicants (IP Australia IP RAPID), counted in hexagons with 60 km sides (each about 9,350 square km, equal area because they are built in the same conic equal-area projection as the map). Each application is placed at the centre of its postcode area. Colour bands are powers of ten. Lord Howe Island (3) and Norfolk Island (2) are counted in the note but not drawn, so the mainland stays large. Hexagons are named after the capital city when most of their applications come from it, otherwise after the largest town inside (Natural Earth).",
+  "width": "container",
+  "height": 420,
+  "projection": { "type": "conicEqualArea", "parallels": [-18, -36], "rotate": [-132, 0] },
+  "layer": [
+    {
+      "data": { "url": "data/geo/aus_states.topojson", "format": { "type": "topojson", "feature": "states" } },
+      "mark": { "type": "geoshape", "fill": "#eef0f2", "stroke": null }
+    },
+    {
+      "data": { "url": "data/geo/tm_hexbins_2025.json", "format": { "type": "json", "property": "features" } },
+      "transform": [
+        { "calculate": "datum.properties.count", "as": "count" },
+        { "joinaggregate": [{ "op": "sum", "field": "count", "as": "total" }] },
+        { "filter": "datum.properties.lon < 155" },
+        { "calculate": "datum.properties.place", "as": "place" },
+        { "calculate": "datum.properties.state", "as": "state" },
+        { "calculate": "datum.properties.lon", "as": "lon" },
+        { "calculate": "datum.properties.lat", "as": "lat" },
+        { "calculate": "datum.count / datum.total", "as": "share" },
+        {
+          "calculate": "datum.count >= 10000 ? '10,000 or more' : datum.count >= 1000 ? '1,000–9,999' : datum.count >= 100 ? '100–999' : datum.count >= 10 ? '10–99' : '1–9'",
+          "as": "band"
+        }
+      ],
+      "params": [
+        {
+          "name": "hover",
+          "select": { "type": "point", "on": "pointerover", "clear": "pointerout", "fields": ["place", "lon", "lat"] }
+        }
+      ],
+      "mark": { "type": "geoshape", "stroke": "#ffffff", "strokeWidth": 0.6 },
+      "encoding": {
+        "color": {
+          "field": "band",
+          "type": "ordinal",
+          "title": "Applications per hexagon",
+          "scale": {
+            "domain": ["1–9", "10–99", "100–999", "1,000–9,999", "10,000 or more"],
+            "range": ["#dadaeb", "#bcbddc", "#9e9ac8", "#756bb1", "#54278f"]
+          },
+          "legend": { "orient": "top", "direction": "horizontal", "symbolType": "square", "titleLimit": 300 }
+        },
+        "tooltip": [
+          { "field": "place", "title": "Area" },
+          { "field": "state", "title": "State or territory" },
+          { "field": "count", "title": "Trade mark applications, 2025", "format": "," },
+          { "field": "share", "title": "Share of Australian applications", "format": ".1%" }
+        ]
+      }
+    },
+    {
+      "data": { "url": "data/geo/aus_states.topojson", "format": { "type": "topojson", "feature": "states" } },
+      "mark": { "type": "geoshape", "filled": false, "stroke": "#ffffff", "strokeWidth": 1.2, "strokeOpacity": 0.9 }
+    },
+    {
+      "data": { "url": "data/geo/tm_hexbins_2025.json", "format": { "type": "json", "property": "features" } },
+      "transform": [
+        { "calculate": "datum.properties.place", "as": "place" },
+        { "calculate": "datum.properties.lon", "as": "lon" },
+        { "calculate": "datum.properties.lat", "as": "lat" },
+        { "filter": { "param": "hover", "empty": false } }
+      ],
+      "mark": { "type": "geoshape", "filled": false, "stroke": "#1d2125", "strokeWidth": 2 }
+    },
+    {
+      "description": "Invisible point in the Tasman Sea so the projection leaves room for the coast labels.",
+      "data": { "values": [{ "lon": 160.5, "lat": -27 }] },
+      "mark": { "type": "point", "opacity": 0 },
+      "encoding": {
+        "longitude": { "field": "lon", "type": "quantitative" },
+        "latitude": { "field": "lat", "type": "quantitative" }
+      }
+    },
+    {
+      "data": { "url": "data/geo/tm_hexbins_2025.json", "format": { "type": "json", "property": "features" } },
+      "transform": [
+        { "filter": "indexof(['Gold Coast', 'Sunshine Coast'], datum.properties.place) >= 0" },
+        { "calculate": "datum.properties.place + ' ' + format(datum.properties.count, ',')", "as": "label" },
+        { "calculate": "datum.properties.lon", "as": "lon" },
+        { "calculate": "datum.properties.lat", "as": "lat" }
+      ],
+      "mark": { "type": "text", "align": "left", "baseline": "middle", "dx": 12, "fontSize": 12, "fontWeight": 600, "color": "#1d2125" },
+      "encoding": {
+        "longitude": { "field": "lon", "type": "quantitative" },
+        "latitude": { "field": "lat", "type": "quantitative" },
+        "text": { "field": "label" }
+      }
+    },
+    {
+      "data": { "url": "data/geo/tm_hexbins_2025.json", "format": { "type": "json", "property": "features" } },
+      "transform": [
+        { "calculate": "datum.properties.count", "as": "count" },
+        { "calculate": "datum.properties.capital", "as": "capital" },
+        { "aggregate": [{ "op": "sum", "field": "count", "as": "n" }, { "op": "sum", "field": "capital", "as": "n_capital" }] },
+        {
+          "calculate": "format(datum.n, ',') + ' applications, ' + format(1 - datum.n_capital / datum.n, '.0%') + ' from outside the capital cities'",
+          "as": "note"
+        }
+      ],
+      "mark": { "type": "text", "align": "left", "baseline": "top", "fontSize": 12, "fontStyle": "italic", "color": "#1d2125" },
+      "encoding": {
+        "x": { "value": 0 },
+        "y": { "value": 448 },
+        "text": { "field": "note" }
+      }
+    }
+  ]
+}

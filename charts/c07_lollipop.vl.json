@@ -1,0 +1,84 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "C7 Lollipop chart: business R&D spending by industry, 2023-24 (ABS BERD), sorted largest first. Dot colour = % of the industry's businesses that were innovation-active in 2024-25 (ABS CAB), joined with a lookup and using the same colour scale as the C6 heatmap. Public administration and education are left out because the innovation survey does not cover them.",
+  "width": "container",
+  "height": 420,
+  "data": {
+    "url": "data/berd_by_industry_2023-24.csv",
+    "format": { "type": "csv", "parse": { "berd_000": "number", "total_berd_000": "number" } }
+  },
+  "transform": [
+    {
+      "lookup": "industry",
+      "from": {
+        "data": {
+          "url": "data/innovation_by_industry_2024-25.csv",
+          "format": { "type": "csv", "parse": { "innovation_active": "number" } }
+        },
+        "key": "industry",
+        "fields": ["innovation_active"]
+      }
+    },
+    { "calculate": "datum.berd_000 / 1000000", "as": "berd_b" },
+    { "calculate": "datum.berd_000 / datum.total_berd_000", "as": "share" },
+    { "calculate": "datum.innovation_active / 100", "as": "active_share" },
+    {
+      "calculate": "datum.berd_b < 0.1 ? '$' + format(datum.berd_000 / 1000, '.0f') + 'm' : '$' + format(datum.berd_b, '.1f') + 'b'",
+      "as": "label"
+    }
+  ],
+  "encoding": {
+    "y": {
+      "field": "industry",
+      "type": "nominal",
+      "sort": "-x",
+      "title": null,
+      "axis": { "domain": false, "ticks": false, "labelPadding": 8, "labelLimit": 200 }
+    },
+    "x": {
+      "field": "berd_b",
+      "type": "quantitative",
+      "title": "Business R&D spending, 2023–24 ($ billion)",
+      "scale": { "domain": [0, 11] },
+      "axis": { "values": [0, 2, 4, 6, 8, 10], "labelExpr": "'$' + datum.label + 'b'", "grid": true }
+    }
+  },
+  "layer": [
+    {
+      "mark": { "type": "rule", "color": "#c8ccd2", "strokeWidth": 2 },
+      "encoding": { "x2": { "datum": 0 } }
+    },
+    {
+      "mark": { "type": "circle", "size": 190, "opacity": 1, "stroke": "#ffffff", "strokeWidth": 1.5 },
+      "encoding": {
+        "color": {
+          "field": "innovation_active",
+          "type": "quantitative",
+          "title": "% of businesses innovation-active, 2024–25",
+          "scale": { "domain": [0, 60] },
+          "legend": { "orient": "top", "direction": "horizontal", "gradientLength": 200, "titleLimit": 400 }
+        },
+        "tooltip": [
+          { "field": "industry", "title": "Industry" },
+          { "field": "anzsic_division", "title": "ABS industry" },
+          { "field": "berd_000", "title": "R&D spending, 2023–24 ($'000)", "format": "," },
+          { "field": "share", "title": "Share of all business R&D", "format": ".1%" },
+          { "field": "active_share", "title": "Innovation-active, 2024–25", "format": ".1%" }
+        ]
+      }
+    },
+    {
+      "mark": { "type": "text", "align": "left", "baseline": "middle", "dx": 12, "fontSize": 12, "color": "#5b6470" },
+      "encoding": { "text": { "field": "label" } }
+    },
+    {
+      "mark": { "type": "text", "align": "left", "baseline": "middle", "dx": 52, "fontSize": 12, "fontStyle": "italic", "color": "#1d2125" },
+      "encoding": {
+        "text": {
+          "condition": { "test": "datum.industry === 'Retail'", "value": "Most innovation-active industry (59%), but little R&D" },
+          "value": ""
+        }
+      }
+    }
+  ]
+}

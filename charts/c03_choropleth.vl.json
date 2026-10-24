@@ -1,0 +1,141 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "C3 Choropleth (world): Global Innovation Index 2026 score for 139 economies, with a toggle for the overall score, innovation inputs or innovation outputs. Equal Earth projection. Grey = not in the index. Seven economies too small for this map scale are drawn as circles.",
+  "width": "container",
+  "height": 460,
+  "params": [
+    {
+      "name": "measure",
+      "value": "gii",
+      "bind": {
+        "input": "radio",
+        "name": "Show ",
+        "options": ["gii", "inputs", "outputs"],
+        "labels": ["Overall score", "Innovation inputs", "Innovation outputs"]
+      }
+    }
+  ],
+  "projection": { "type": "equalEarth" },
+  "layer": [
+    {
+      "data": {
+        "url": "data/geo/world_110m.topojson",
+        "format": { "type": "topojson", "feature": "countries" }
+      },
+      "mark": { "type": "geoshape", "fill": "#e3e5e8", "stroke": "#ffffff", "strokeWidth": 0.5 }
+    },
+    {
+      "data": {
+        "url": "data/geo/world_110m.topojson",
+        "format": { "type": "topojson", "feature": "countries" }
+      },
+      "transform": [
+        {
+          "lookup": "properties.iso3",
+          "from": {
+            "data": {
+              "url": "data/gii_2026.csv",
+              "format": {
+                "type": "csv",
+                "parse": {
+                  "gii_score": "number", "gii_rank": "number",
+                  "inputs_score": "number", "inputs_rank": "number",
+                  "outputs_score": "number", "outputs_rank": "number"
+                }
+              }
+            },
+            "key": "iso3",
+            "fields": ["economy", "gii_score", "gii_rank", "inputs_score", "inputs_rank", "outputs_score", "outputs_rank"]
+          }
+        },
+        { "filter": "isValid(datum.gii_score)" },
+        { "calculate": "datum[measure + '_score']", "as": "score" },
+        { "calculate": "datum[measure + '_rank']", "as": "rank" }
+      ],
+      "mark": { "type": "geoshape", "stroke": "#ffffff", "strokeWidth": 0.5 },
+      "encoding": {
+        "color": {
+          "field": "score",
+          "type": "quantitative",
+          "title": "Score (0–100)",
+          "scale": { "domain": [0, 70] },
+          "legend": { "orient": "bottom-left", "direction": "horizontal", "gradientLength": 160 }
+        },
+        "tooltip": [
+          { "field": "economy", "title": "Economy" },
+          { "field": "score", "title": "Score (0–100)", "format": ".1f" },
+          { "field": "rank", "title": "Rank (of 139)" }
+        ]
+      }
+    },
+    {
+      "data": {
+        "url": "data/gii_2026.csv",
+        "format": {
+          "type": "csv",
+          "parse": {
+            "gii_score": "number", "gii_rank": "number",
+            "inputs_score": "number", "inputs_rank": "number",
+            "outputs_score": "number", "outputs_rank": "number",
+            "lon": "number", "lat": "number"
+          }
+        }
+      },
+      "transform": [
+        { "filter": "isValid(datum.lon)" },
+        { "calculate": "datum[measure + '_score']", "as": "score" },
+        { "calculate": "datum[measure + '_rank']", "as": "rank" }
+      ],
+      "mark": { "type": "circle", "size": 45, "opacity": 1, "stroke": "#ffffff", "strokeWidth": 0.8 },
+      "encoding": {
+        "longitude": { "field": "lon", "type": "quantitative" },
+        "latitude": { "field": "lat", "type": "quantitative" },
+        "color": { "field": "score", "type": "quantitative" },
+        "tooltip": [
+          { "field": "economy", "title": "Economy" },
+          { "field": "score", "title": "Score (0–100)", "format": ".1f" },
+          { "field": "rank", "title": "Rank (of 139)" }
+        ]
+      }
+    },
+    {
+      "data": {
+        "url": "data/geo/world_110m.topojson",
+        "format": { "type": "topojson", "feature": "countries" }
+      },
+      "transform": [{ "filter": "datum.properties.iso3 === 'AUS'" }],
+      "mark": { "type": "geoshape", "filled": false, "stroke": "#d55e00", "strokeWidth": 1.5 }
+    },
+    {
+      "data": { "values": [{ "iso3": "AUS", "lon": 110, "lat": -30 }] },
+      "transform": [
+        {
+          "lookup": "iso3",
+          "from": {
+            "data": {
+              "url": "data/gii_2026.csv",
+              "format": { "type": "csv", "parse": { "gii_rank": "number", "inputs_rank": "number", "outputs_rank": "number" } }
+            },
+            "key": "iso3",
+            "fields": ["gii_rank", "inputs_rank", "outputs_rank"]
+          }
+        },
+        { "calculate": "datum[measure + '_rank']", "as": "rank" },
+        {
+          "calculate": "datum.rank % 100 >= 11 && datum.rank % 100 <= 13 ? 'th' : ['th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th'][datum.rank % 10]",
+          "as": "suffix"
+        },
+        {
+          "calculate": "'Australia: ' + datum.rank + datum.suffix + (measure == 'gii' ? ' of 139' : ' for ' + measure)",
+          "as": "label"
+        }
+      ],
+      "mark": { "type": "text", "align": "right", "baseline": "middle", "fontSize": 13, "fontWeight": 600, "color": "#d55e00" },
+      "encoding": {
+        "longitude": { "field": "lon", "type": "quantitative" },
+        "latitude": { "field": "lat", "type": "quantitative" },
+        "text": { "field": "label" }
+      }
+    }
+  ]
+}

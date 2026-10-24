@@ -1,0 +1,101 @@
+rank,cluster,subregion,pct_share,pubs_share,vc_share,lon,lat,located_at
+1,Shenzhen–Hong Kong–Guangzhou,"South-eastern Asia, Eastern Asia, and Oceania",9.162480354,2.521600008,3.021058321,114.1202,22.5543,Shenzhen
+2,Tokyo–Yokohama,"South-eastern Asia, Eastern Asia, and Oceania",10.12180042,1.346889973,2.163552761,139.7495,35.687,Tokyo
+3,San Jose–San Francisco,Northern America,3.834170103,0.651678979,6.86787796,-121.8519,37.3019,San Jose
+4,Beijing,"South-eastern Asia, Eastern Asia, and Oceania",4.142570019,4.214970112,2.480994701,116.3863,39.9308,Beijing
+5,Seoul,"South-eastern Asia, Eastern Asia, and Oceania",5.628149986,1.692600012,3.119176865,126.9978,37.5683,Seoul
+6,Shanghai–Suzhou,"South-eastern Asia, Eastern Asia, and Oceania",3.455719948,2.654979944,3.896291256,121.4346,31.2184,Shanghai
+7,New York City,Northern America,1.018859982,0.869781971,4.629705906,-73.982,40.7519,New York
+8,London,Europe,0.561514974,0.653338015,4.187348366,-0.1187,51.5019,London
+9,Boston–Cambridge,Northern America,1.474439979,0.874206007,1.877030373,-71.072,42.3319,Boston
+10,Osaka–Kobe–Kyoto,"South-eastern Asia, Eastern Asia, and Oceania",2.809920073,0.605709016,0.223858446,135.4582,34.752,Ōsaka
+11,Paris,Europe,1.270550013,0.705258012,1.653171897,2.3314,48.8686,Paris
+12,Los Angeles,Northern America,0.859540999,0.498971999,2.104599237,-118.1819,33.9919,Los Angeles
+13,Hangzhou,"South-eastern Asia, Eastern Asia, and Oceania",0.862810016,1.084400058,1.256163359,120.1681,30.2519,Hangzhou
+14,San Diego,Northern America,2.116519928,0.227996007,0.645602822,-117.1819,32.822,San Diego
+15,Nanjing,"South-eastern Asia, Eastern Asia, and Oceania",0.601373971,1.748870015,0.593657732,118.778,32.052,Nanjing
+16,Singapore,"South-eastern Asia, Eastern Asia, and Oceania",0.435508996,0.401973993,1.703055739,103.8539,1.295,Singapore
+17,Wuhan,"South-eastern Asia, Eastern Asia, and Oceania",0.537763,1.431609988,0.300951511,114.2681,30.582,Wuhan
+18,Washington DC–Baltimore,Northern America,0.508051991,0.820764005,0.873996139,-77.0114,38.9015,"Washington,  D.C."
+19,Tel Aviv–Jerusalem,Northern Africa and Western Asia,0.503889024,0.293359995,1.18401742,34.7681,32.0819,Tel Aviv
+20,Chengdu,"South-eastern Asia, Eastern Asia, and Oceania",0.228048995,1.15237999,0.511617541,104.0681,30.6719,Chengdu
+21,Philadelphia,Northern America,0.448255986,0.378980994,1.053742528,-75.1719,40.0019,Philadelphia
+22,Daejeon,"South-eastern Asia, Eastern Asia, and Oceania",1.258929968,0.352878004,0.255602658,127.4231,36.3375,Daejeon
+23,Xi’an,"South-eastern Asia, Eastern Asia, and Oceania",0.187618002,1.419780016,0.23622632,108.8931,34.277,Xian
+24,Seattle,Northern America,0.735682011,0.224779993,0.843900979,-122.3419,47.5719,Seattle
+25,Bengaluru,Central and Southern Asia,0.401493013,0.201814994,1.194736242,77.5581,12.9719,Bengaluru
+26,Amsterdam–Rotterdam,Europe,0.346486986,0.60008198,0.829059541,4.9147,52.3519,Amsterdam
+27,Delhi,Central and Southern Asia,0.092439197,0.436477005,1.09002161,77.2,28.6,New Delhi
+28,Munich,Europe,0.812231004,0.314879,0.410613269,11.573,48.1319,Munich
+29,Nagoya,"South-eastern Asia, Eastern Asia, and Oceania",1.227010012,0.241331995,0.050296005,136.913,35.1569,Nagoya
+30,Stockholm,Europe,0.428272992,0.222151995,0.834006667,18.0954,59.3527,Stockholm
+31,Berlin,Europe,0.229518995,0.284752995,0.925528944,13.3996,52.5238,Berlin
+32,Hefei,"South-eastern Asia, Eastern Asia, and Oceania",0.379896998,0.645470977,0.396184087,117.2781,31.852,Hefei
+33,Qingdao,"South-eastern Asia, Eastern Asia, and Oceania",0.570662022,0.698319018,0.134397522,120.3281,36.0919,Qingdao
+34,Chicago,Northern America,0.297352999,0.337357998,0.715687394,-87.752,41.8319,Chicago
+35,Denver,Northern America,0.271517992,0.248101994,0.812569082,-104.986,39.7411,Denver
+36,Toronto,Northern America,0.204363003,0.327654004,0.771755099,-79.422,43.7019,Toronto
+37,Austin,Northern America,0.207570001,0.110313997,0.928414762,-97.7447,30.2689,Austin
+38,Sydney,"South-eastern Asia, Eastern Asia, and Oceania",0.204545006,0.396032989,0.624989688,151.1832,-33.9181,Sydney
+39,Houston,Northern America,0.583617985,0.269506991,0.371448368,-95.3419,29.8219,Houston
+40,Zürich,Europe,0.307511985,0.27689901,0.614683151,8.5481,47.3819,Zürich
+41,Changsha,"South-eastern Asia, Eastern Asia, and Oceania",0.118268996,0.867392004,0.181807682,112.968,28.2019,Changsha
+42,Taipei–Hsinchu,"South-eastern Asia, Eastern Asia, and Oceania",0.292286992,0.660287023,0.178921849,121.5683,25.0358,Taipei
+43,Mumbai,Central and Southern Asia,0.173582003,0.195278004,0.70785445,72.855,19.0189,Mumbai
+44,Tianjin,"South-eastern Asia, Eastern Asia, and Oceania",0.100741997,0.817405999,0.148002177,117.1981,39.132,Tianjin
+45,Barcelona,Europe,0.157891005,0.356667012,0.541712701,2.1814,41.3852,Barcelona
+46,Cologne,Europe,0.474815011,0.384413987,0.193763301,6.9481,50.932,Cologne
+47,Copenhagen,Europe,0.238370001,0.281883001,0.529344857,12.5615,55.6805,København
+48,Madrid,Europe,0.123714998,0.468014002,0.41597268,-3.6853,40.402,Madrid
+49,São Paulo,Latin America and the Caribbean,0.051529001,0.277482003,0.657558441,-46.627,-23.5567,São Paulo
+50,Moscow,Europe,0.134608001,0.716669977,0.130687162,37.6136,55.7541,Moscow
+51,Minneapolis,Northern America,0.502084017,0.163424,0.311258048,-93.2537,44.9819,Minneapolis
+52,Chongqing,"South-eastern Asia, Eastern Asia, and Oceania",0.106919996,0.702757001,0.151300281,106.593,29.5669,Chongqing
+53,Melbourne,"South-eastern Asia, Eastern Asia, and Oceania",0.139468998,0.439170986,0.359905005,144.9731,-37.8181,Melbourne
+54,Stuttgart,Europe,0.703100979,0.164286003,0.060602564,9.2,48.78,Stuttgart
+55,Raleigh,Northern America,0.227061003,0.327670991,0.357843697,-78.6447,35.8188,Raleigh
+56,Istanbul,Northern Africa and Western Asia,0.189052001,0.371291995,0.328160822,29.0081,41.1069,Istanbul
+57,Milan,Europe,0.197723001,0.386004001,0.294767559,9.2031,45.4719,Milan
+58,Brussels–Antwerp,Europe,0.215283006,0.321081996,0.329809874,4.3314,50.8353,Brussels
+59,Helsinki,Europe,0.248933002,0.153725997,0.436585814,24.9322,60.1775,Helsinki
+60,Atlanta,Northern America,0.143631995,0.254907995,0.433699965,-84.4019,33.832,Atlanta
+61,Miami,Northern America,0.071922198,0.098542199,0.636945307,-80.2261,25.7896,Miami
+62,Montréal,Northern America,0.215384007,0.283780992,0.303837329,-73.5852,45.5019,Montréal
+63,Dallas,Northern America,0.244197994,0.114494003,0.419683039,-96.842,32.822,Dallas
+64,Jinan,"South-eastern Asia, Eastern Asia, and Oceania",0.130115002,0.544562995,0.093583547,116.9931,36.6769,Jinan
+65,Tehran,Central and Southern Asia,0.030925499,0.686069012,0.044112071,51.4224,35.6739,Tehran
+66,Eindhoven,Europe,0.60452801,0.0623479,0.079566628,5.5,51.43,Eindhoven
+67,Frankfurt am Main,Europe,0.409839988,0.205116004,0.122854173,8.675,50.1,Frankfurt
+68,Vancouver,Northern America,0.130824998,0.177218005,0.426691502,-123.1236,49.2754,Vancouver
+69,Changchun,"South-eastern Asia, Eastern Asia, and Oceania",0.135639995,0.532106996,0.036691349,125.338,43.867,Changchun
+70,Harbin,"South-eastern Asia, Eastern Asia, and Oceania",0.0293913,0.657613993,0.017315017,126.648,45.7519,Harbin
+71,Cambridge,Europe,0.243267998,0.187969998,0.260962069,0.1166,52.2004,Cambridge
+72,Dublin,Europe,0.073904298,0.123613,0.456374407,-6.2509,53.335,Dublin
+73,Zhengzhou,"South-eastern Asia, Eastern Asia, and Oceania",0.052074499,0.489574999,0.062251613,113.6631,34.7569,Zhengzhou
+74,Shenyang,"South-eastern Asia, Eastern Asia, and Oceania",0.045735098,0.510824025,0.044524331,123.448,41.8069,Shenyeng
+75,Ningde,"South-eastern Asia, Eastern Asia, and Oceania",0.586906016,0.00454348,0.002473574,119.5228,26.6617,Ningde (NGA GEOnet Names Server)
+76,Vienna,Europe,0.124109998,0.234468997,0.213139623,16.3647,48.202,Vienna
+77,Portland,Northern America,0.199582994,0.073188998,0.292293996,-122.6819,45.522,Portland
+78,Xiamen,"South-eastern Asia, Eastern Asia, and Oceania",0.175145999,0.253414005,0.133160725,118.0781,24.4519,Xiamen
+79,Chennai,Central and Southern Asia,0.118653998,0.272253007,0.162843615,80.2781,13.0919,Chennai
+80,Phoenix,Northern America,0.154553995,0.104254,0.288583636,-112.0719,33.5419,Phoenix
+81,Rome,Europe,0.073549002,0.370923012,0.094408073,12.4813,41.8979,Rome
+82,Mexico City,Latin America and the Caribbean,0.017987199,0.237865001,0.270856351,-99.1329,19.4444,Mexico City
+83,Dalian,"South-eastern Asia, Eastern Asia, and Oceania",0.056890398,0.432170987,0.036279086,121.6279,38.9248,Dalian
+84,Pittsburgh,Northern America,0.139844,0.184284002,0.199947223,-80.0019,40.4319,Pittsburgh
+85,Oxford,Europe,0.124485001,0.206278995,0.191701978,-1.25,51.7704,Oxford
+86,Cairo,Northern Africa and Western Asia,0.0136487,0.311571985,0.19335103,31.248,30.0519,Cairo
+87,Ningbo,"South-eastern Asia, Eastern Asia, and Oceania",0.091848098,0.205853,0.216437727,121.5481,29.8819,Ningbo
+88,Heidelberg–Mannheim,Europe,0.314731985,0.150046006,0.046997905,8.47,49.5004,Mannheim
+89,Oslo,Europe,0.060240999,0.146437004,0.28281197,10.748,59.9186,Oslo
+90,Kuala Lumpur,"South-eastern Asia, Eastern Asia, and Oceania",0.039662801,0.240278006,0.208192483,101.698,3.1686,Kuala Lumpur
+91,Warsaw,Europe,0.038936,0.269196987,0.176036015,20.9981,52.2519,Warsaw
+92,Riyadh,Northern Africa and Western Asia,0.0123472,0.292416006,0.172737911,46.7708,24.6428,Riyadh
+93,Hamburg,Europe,0.122276999,0.134507999,0.209429264,9.9981,53.552,Hamburg
+94,Zhenjiang,"South-eastern Asia, Eastern Asia, and Oceania",0.085265599,0.330996007,0.049471479,119.4281,32.2219,Zhenjiang
+95,Lyon,Europe,0.154878005,0.136237994,0.165729463,4.8281,45.772,Lyon
+96,Fuzhou,"South-eastern Asia, Eastern Asia, and Oceania",0.042730302,0.348641992,0.063076138,119.2981,26.0819,Fuzhou
+97,Manchester,Europe,0.071355298,0.134170994,0.243234783,-2.2499,53.5024,Manchester
+98,Busan,"South-eastern Asia, Eastern Asia, and Oceania",0.168981999,0.167254999,0.108012728,129.0081,35.097,Busan
+99,Macau–Zhuhai,"South-eastern Asia, Eastern Asia, and Oceania",0.213694006,0.0801595,0.148826703,113.545,22.203,Macau
+100,Göteborg,Europe,0.156944007,0.115043998,0.169027552,12.0,57.75,Göteborg

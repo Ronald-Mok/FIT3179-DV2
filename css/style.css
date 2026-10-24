@@ -1,0 +1,498 @@
+/* Ideas at Work — page styles
+   Colour values are mirrored in js/main.js (PALETTE) so charts and page match. */
+
+:root {
+  /* Surfaces and text */
+  --bg: #fafaf7;
+  --surface: #ffffff;
+  --ink: #1d2125;
+  --ink-muted: #5b6470;
+  --rule: #e3e5e8;
+  --context: #c8ccd2;
+
+  /* Meaning-bearing colours (Okabe–Ito based, colour-blind safe) */
+  --accent: #d55e00;   /* Australia / focus */
+  --goods: #0072b2;    /* goods & services innovation */
+  --process: #009e73;  /* process innovation */
+
+  /* Sequential ramp for "more" (ColorBrewer Purples) */
+  --seq-1: #efedf5;
+  --seq-2: #cbc9e2;
+  --seq-3: #9e9ac8;
+  --seq-4: #756bb1;
+  --seq-5: #54278f;
+
+  /* Ordinal ramp for business size, Micro → Large */
+  --size-1: #c9d3dd;
+  --size-2: #93a5b8;
+  --size-3: #5c7590;
+  --size-4: #2e4560;
+
+  --font-head: "Space Grotesk", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, sans-serif;
+
+  --container: 1140px;
+  --gutter: 24px;
+  --measure: 68ch;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Typography ---------- */
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-head);
+  line-height: 1.2;
+  margin: 0;
+}
+
+h1 {
+  font-size: 52px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+h2 {
+  font-size: 34px;
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+h4 {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+p {
+  margin: 0 0 1em;
+  max-width: var(--measure);
+}
+
+a {
+  color: inherit;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 3px;
+}
+
+.kicker,
+.section-num {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.section-num {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-num .icon {
+  width: 20px;
+  height: 20px;
+}
+
+.lead {
+  font-size: 22px;
+  line-height: 1.45;
+  max-width: 44ch;
+  margin-top: 16px;
+}
+
+.big-stat {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 72px;
+  line-height: 1;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+/* Matches the "innovation-active" purple used in the charts */
+.big-stat--active {
+  color: var(--seq-5);
+}
+
+.subhead {
+  margin: 72px 0 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule);
+}
+
+.transition {
+  font-family: var(--font-head);
+  font-size: 22px;
+  font-weight: 500;
+  margin: 72px 0 0;
+  padding-left: 20px;
+  border-left: 4px solid var(--accent);
+}
+
+/* ---------- Layout ---------- */
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.story-section {
+  padding: 120px 0;
+  border-top: 1px solid var(--rule);
+}
+
+.section-head {
+  margin-bottom: 48px;
+}
+
+/* 12-column rows. A: text 4 | chart 8. C: 6 | 6. B: a full-width figure. */
+.row {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+  row-gap: 48px;
+  margin: 48px 0;
+}
+
+.row-a > .text-col {
+  grid-column: 1 / span 4;
+}
+
+.row-a > .chart-block {
+  grid-column: 5 / span 8;
+}
+
+.row-c > * {
+  grid-column: span 6;
+}
+
+.row-b {
+  margin: 48px 0;
+}
+
+.text-col {
+  align-self: start;
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  padding: 120px 0 96px;
+}
+
+.hero-sub {
+  font-family: var(--font-head);
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--ink-muted);
+  margin-top: 16px;
+}
+
+.byline {
+  font-size: 14px;
+  color: var(--ink-muted);
+}
+
+.hero-intro {
+  font-size: 20px;
+  max-width: 60ch;
+  margin-top: 32px;
+}
+
+.toc ol {
+  list-style: none;
+  counter-reset: q;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px var(--gutter);
+  max-width: 760px;
+  margin: 40px 0 0;
+  padding: 24px 0 0;
+  border-top: 1px solid var(--rule);
+}
+
+.toc li {
+  counter-increment: q;
+  font-size: 16px;
+}
+
+.toc li::before {
+  content: counter(q, decimal-leading-zero);
+  font-weight: 600;
+  color: var(--accent);
+  margin-right: 12px;
+}
+
+.toc a {
+  text-decoration: none;
+}
+
+.toc a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+}
+
+/* ---------- Cards ---------- */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 24px;
+}
+
+.card h3,
+.card h4 {
+  margin-bottom: 8px;
+}
+
+.card p:last-child,
+.card ul:last-child {
+  margin-bottom: 0;
+}
+
+.card ul {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--ink-muted);
+}
+
+.card-type {
+  border-top-width: 4px;
+}
+
+.card-type h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-type h3 .icon {
+  width: 28px;
+  height: 28px;
+}
+
+.card-goods {
+  border-top-color: var(--goods);
+}
+
+.card-goods h3 {
+  color: var(--goods);
+}
+
+.card-process {
+  border-top-color: var(--process);
+}
+
+.card-process h3 {
+  color: var(--process);
+}
+
+.card-note {
+  border-left: 4px solid var(--ink-muted);
+  margin-bottom: 24px;
+}
+
+.findings {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--gutter);
+  margin-top: 32px;
+}
+
+.finding {
+  font-size: 16px;
+}
+
+.finding-num {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 1;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+/* ---------- Icons (Tabler Icons, MIT licence, inlined as SVG) ---------- */
+
+.icon {
+  width: 1.25em;
+  height: 1.25em;
+  flex: none;
+}
+
+/* ---------- Charts ---------- */
+
+.chart-block {
+  margin: 0;
+}
+
+.chart-title {
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.chart-subtitle {
+  font-size: 14px;
+  color: var(--ink-muted);
+  margin: 4px 0 16px;
+}
+
+.chart {
+  width: 100%;
+}
+
+.chart .vega-embed {
+  width: 100%;
+}
+
+.vega-bind {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--ink-muted);
+  margin-top: 12px;
+}
+
+.vega-bind select {
+  font: inherit;
+  color: var(--ink);
+  padding: 4px 8px;
+  margin-left: 6px;
+}
+
+.vega-bind-radio input {
+  margin: 0 4px 0 14px;
+  vertical-align: -1px;
+}
+
+.vega-bind input[type="range"] {
+  accent-color: var(--accent);
+  vertical-align: middle;
+  margin: 0 8px;
+}
+
+/* Placeholder until a chart's spec is added in js/main.js */
+.chart:empty {
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px dashed var(--context);
+  border-radius: 8px;
+  color: var(--ink-muted);
+  font-size: 14px;
+}
+
+.chart:empty::before {
+  content: attr(data-label) " · built in " attr(data-task);
+}
+
+.chart-map:empty {
+  min-height: 420px;
+}
+
+.source {
+  font-size: 13px;
+  color: var(--ink-muted);
+  margin-top: 12px;
+}
+
+/* ---------- About ---------- */
+
+.about-list {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+  row-gap: 24px;
+  margin: 0;
+}
+
+.about-list dt {
+  grid-column: 1 / span 3;
+  font-family: var(--font-head);
+  font-weight: 500;
+}
+
+.about-list dd {
+  grid-column: 4 / span 9;
+  margin: 0;
+  max-width: var(--measure);
+}
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+  background: var(--ink);
+  color: #e9ebee;
+  padding: 72px 0;
+  font-size: 15px;
+}
+
+.site-footer h3 {
+  font-size: 16px;
+  font-weight: 500;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gutter);
+}
+
+.sources {
+  margin: 0;
+  padding-left: 18px;
+}
+
+/* ---------- Narrow screens (the brief targets laptops; this only stops overflow) ---------- */
+
+@media (max-width: 900px) {
+  .row-a > .text-col,
+  .row-a > .chart-block,
+  .row-c > *,
+  .about-list dt,
+  .about-list dd {
+    grid-column: 1 / -1;
+  }
+
+  .findings,
+  .footer-grid,
+  .toc ol {
+    grid-template-columns: 1fr;
+  }
+
+  h1 {
+    font-size: 40px;
+  }
+}

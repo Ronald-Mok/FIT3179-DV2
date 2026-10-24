@@ -1,0 +1,290 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "C1 Sunburst: every innovation Australian businesses reported in 2024-25, by type (inner ring) and sub-type (outer ring). A business that reported several kinds of innovation counts once for each, so slices show the share of all innovations reported, not the share of businesses.",
+  "width": "container",
+  "height": 460,
+  "data": {
+    "url": "data/innovation_types_2024-25.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "sort": "number",
+        "type_pct": "number",
+        "pct": "number"
+      }
+    }
+  },
+  "transform": [
+    {
+      "joinaggregate": [
+        {
+          "op": "sum",
+          "field": "pct",
+          "as": "total"
+        }
+      ]
+    },
+    {
+      "calculate": "datum.pct / datum.total",
+      "as": "share"
+    }
+  ],
+  "layer": [
+    {
+      "transform": [
+        {
+          "aggregate": [
+            {
+              "op": "sum",
+              "field": "share",
+              "as": "share"
+            },
+            {
+              "op": "max",
+              "field": "type_pct",
+              "as": "type_pct"
+            },
+            {
+              "op": "min",
+              "field": "sort",
+              "as": "sort"
+            }
+          ],
+          "groupby": ["type", "type_short"]
+        },
+        {
+          "calculate": "datum.type_pct / 100",
+          "as": "type_share_of_businesses"
+        }
+      ],
+      "mark": {
+        "type": "arc",
+        "innerRadius": 64,
+        "outerRadius": 132,
+        "stroke": "#ffffff",
+        "strokeWidth": 2
+      },
+      "encoding": {
+        "theta": {
+          "field": "share",
+          "type": "quantitative",
+          "stack": true
+        },
+        "order": {
+          "field": "sort",
+          "type": "quantitative"
+        },
+        "color": {
+          "field": "type",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Goods and services innovation", "Process innovation"],
+            "range": ["#0072b2", "#009e73"]
+          },
+          "legend": null
+        },
+        "tooltip": [
+          {
+            "field": "type",
+            "title": "Type"
+          },
+          {
+            "field": "share",
+            "title": "Share of all innovations reported",
+            "format": ".0%"
+          },
+          {
+            "field": "type_share_of_businesses",
+            "title": "Businesses that introduced this type",
+            "format": ".0%"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "aggregate": [
+            {
+              "op": "sum",
+              "field": "share",
+              "as": "share"
+            },
+            {
+              "op": "min",
+              "field": "sort",
+              "as": "sort"
+            }
+          ],
+          "groupby": ["type", "type_short"]
+        },
+        {
+          "calculate": "datum.type_short + '|' + format(datum.share, '.1%')",
+          "as": "label"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "radius": 98,
+        "fontSize": 13,
+        "fontWeight": 500,
+        "lineBreak": "|",
+        "color": "#ffffff"
+      },
+      "encoding": {
+        "theta": {
+          "field": "share",
+          "type": "quantitative",
+          "stack": true
+        },
+        "order": {
+          "field": "sort",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "label"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "calculate": "datum.pct / 100",
+          "as": "share_of_businesses"
+        }
+      ],
+      "mark": {
+        "type": "arc",
+        "innerRadius": 134,
+        "outerRadius": 218,
+        "stroke": "#ffffff",
+        "strokeWidth": 2,
+        "opacity": 0.55
+      },
+      "encoding": {
+        "theta": {
+          "field": "share",
+          "type": "quantitative",
+          "stack": true
+        },
+        "order": {
+          "field": "sort",
+          "type": "quantitative"
+        },
+        "color": {
+          "field": "type",
+          "type": "nominal",
+          "legend": null
+        },
+        "tooltip": [
+          {
+            "field": "subtype",
+            "title": "Innovation"
+          },
+          {
+            "field": "type",
+            "title": "Type"
+          },
+          {
+            "field": "share",
+            "title": "Share of all innovations reported",
+            "format": ".1%"
+          },
+          {
+            "field": "share_of_businesses",
+            "title": "Businesses that introduced it",
+            "format": ".1%"
+          }
+        ]
+      }
+    },
+
+    {
+      "transform": [
+        {
+          "calculate": "datum.subtype_short + '|' + format(datum.share, '.1%')",
+          "as": "subtype_label"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "radius": 176,
+        "fontSize": 10,
+        "fontWeight": 500,
+        "lineBreak": "|",
+        "lineHeight": 13,
+        "color": "#1d2125"
+      },
+      "encoding": {
+        "theta": {
+          "field": "share",
+          "type": "quantitative",
+          "stack": true
+        },
+        "order": {
+          "field": "sort",
+          "type": "quantitative"
+        },
+        "text": {
+          "condition": {
+            "test": "datum.pct >= 1",
+            "field": "subtype_label",
+            "type": "nominal"
+          },
+          "value": ""
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.sort == 1"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "radius": 0,
+        "dy": -10,
+        "fontSize": 30,
+        "fontWeight": 700,
+        "font": "Space Grotesk",
+        "color": "#1d2125"
+      },
+      "encoding": {
+        "theta": {
+          "field": "share",
+          "type": "quantitative",
+          "stack": true
+        },
+        "text": {
+          "value": "100"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.sort == 1"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "radius": 0,
+        "dy": 18,
+        "fontSize": 12,
+        "lineBreak": "|",
+        "color": "#5b6470"
+      },
+      "encoding": {
+        "theta": {
+          "field": "share",
+          "type": "quantitative",
+          "stack": true
+        },
+        "text": {
+          "value": "innovations|reported"
+        }
+      }
+    }
+  ]
+}

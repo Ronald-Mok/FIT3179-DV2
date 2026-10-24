@@ -1,0 +1,144 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "C10 Choropleth (Australia): business R&D spending as a % of gross state product (GSP) for each state and territory, with radio buttons for the four ABS survey years 2017-18 to 2023-24. Conic equal-area projection. Grey = estimate too unreliable for ABS to publish (NT, 2021-22).",
+  "width": "container",
+  "height": 460,
+  "params": [
+    {
+      "name": "year",
+      "value": "2023-24",
+      "bind": {
+        "input": "radio",
+        "name": "Year ",
+        "options": ["2017-18", "2019-20", "2021-22", "2023-24"],
+        "labels": ["2017–18", "2019–20", "2021–22", "2023–24"]
+      }
+    }
+  ],
+  "projection": { "type": "conicEqualArea", "parallels": [-18, -36], "rotate": [-132, 0] },
+  "data": {
+    "url": "data/berd_by_state.csv",
+    "format": { "type": "csv", "parse": { "berd_pct_gsp": "number", "berd_000": "number" } }
+  },
+  "transform": [
+    { "filter": "datum.year === year" },
+    { "calculate": "replace(datum.year, '-', '–')", "as": "year_label" }
+  ],
+  "layer": [
+    {
+      "transform": [
+        {
+          "lookup": "state",
+          "from": {
+            "data": { "url": "data/geo/aus_states.topojson", "format": { "type": "topojson", "feature": "states" } },
+            "key": "properties.state"
+          },
+          "as": "geo"
+        },
+        { "calculate": "datum.berd_pct_gsp / 100", "as": "share" },
+        {
+          "calculate": "isValid(datum.berd_000) ? '$' + format(datum.berd_000 / 1000000, '.2f') + ' billion' : 'Only shown for 2023–24'",
+          "as": "spend"
+        },
+        {
+          "calculate": "isValid(datum.berd_pct_gsp) ? 'Published' : 'Not published: ' + datum.reliability",
+          "as": "status"
+        }
+      ],
+      "mark": { "type": "geoshape", "stroke": "#ffffff", "strokeWidth": 1, "invalid": null },
+      "encoding": {
+        "shape": { "field": "geo", "type": "geojson" },
+        "color": {
+          "condition": { "test": "!isValid(datum.berd_pct_gsp)", "value": "#e3e5e8" },
+          "field": "berd_pct_gsp",
+          "type": "quantitative",
+          "title": "Business R&D, % of GSP",
+          
+          "scale": { "domain": [0, 1.2] },
+          "legend": {
+            "orient": "top-left",
+            "direction": "horizontal",
+            "gradientLength": 150,
+            "titleLimit": 300,
+            "values": [0, 0.4, 0.8, 1.2],
+            "labelExpr": "format(datum.value, '.1f') + '%'"
+          }
+        },
+        "tooltip": [
+          { "field": "state", "title": "State or territory" },
+          { "field": "year_label", "title": "Year" },
+          { "field": "share", "title": "Business R&D, % of GSP",
+           "format": ".2%" },
+          { "field": "spend", "title": "Business R&D spending" },
+          { "field": "status", "title": "ABS estimate" }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "lookup": "abbr",
+          "from": {
+            "data": { "url": "data/geo/state_labels.csv", "format": { "type": "csv", "parse": { "lon": "number", "lat": "number", "anchor_lon": "number", "anchor_lat": "number" } } },
+            "key": "abbr",
+            "fields": ["lon", "lat", "inside", "anchor_lon", "anchor_lat"]
+          }
+        },
+        { "filter": "datum.inside === 'false'" }
+      ],
+      "mark": { "type": "rule", "color": "#5b6470", "strokeWidth": 1 },
+      "encoding": {
+        "longitude": { "field": "anchor_lon", "type": "quantitative" },
+        "latitude": { "field": "anchor_lat", "type": "quantitative" },
+        "longitude2": { "field": "lon" },
+        "latitude2": { "field": "lat" }
+      }
+    },
+    {
+      "transform": [
+        {
+          "lookup": "abbr",
+          "from": {
+            "data": { "url": "data/geo/state_labels.csv", "format": { "type": "csv", "parse": { "lon": "number", "lat": "number" } } },
+            "key": "abbr",
+            "fields": ["lon", "lat", "inside"]
+          }
+        },
+        {
+          "calculate": "[datum.abbr, isValid(datum.berd_pct_gsp) ? format(datum.berd_pct_gsp, '.2f') + '%' : 'n/a']",
+          "as": "label"
+        }
+      ],
+      "encoding": {
+        "longitude": { "field": "lon", "type": "quantitative" },
+        "latitude": { "field": "lat", "type": "quantitative" },
+        "text": { "field": "label" }
+      },
+      "layer": [
+        {
+          "transform": [{ "filter": "datum.inside === 'true'" }],
+          "mark": { "type": "text", "align": "center", "fontSize": 12, "lineHeight": 15, "fontWeight": 600 },
+          "encoding": {
+            "color": {
+              "condition": { "test": "datum.berd_pct_gsp >= 0.75", "value": "#ffffff" },
+              "value": "#1d2125"
+            }
+          }
+        },
+        {
+          "transform": [{ "filter": "datum.inside === 'false'" }],
+          "mark": { "type": "text", "align": "left", "dx": 4, "fontSize": 12, "lineHeight": 15, "fontWeight": 600, "color": "#1d2125" }
+        }
+      ]
+    },
+    {
+      "data": { "values": [{}] },
+      "mark": { "type": "text", "align": "left", "baseline": "bottom", "fontSize": 12, "fontStyle": "italic", "lineHeight": 16, "color": "#1d2125" },
+      "encoding": {
+        "x": { "value": 0 },
+        "y": { "value": 455 },
+        "text": { "value": ["In every survey year, only NSW and Victoria", "spent more than 1% of their economy on R&D"] }
+      }
+    }
+  ]
+}

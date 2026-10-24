@@ -1,0 +1,11 @@
+sort,type,type_short,type_pct,subtype,subtype_short,pct
+1,Goods and services innovation,Goods &|services,23,New or improved goods,Goods,11.1
+2,Goods and services innovation,Goods &|services,23,New or improved services,Services,15.4
+3,Process innovation,Processes,28,Methods for producing goods or providing services,Production,8.3
+4,Process innovation,Processes,28,"Logistics, delivery and distribution methods",Logistics,5.7
+5,Process innovation,Processes,28,Methods for information processing or communication,IT & comms,10.2
+6,Process innovation,Processes,28,Methods for accounting or other administrative operations,Admin,10.3
+7,Process innovation,Processes,28,Methods of organising ongoing internal procedures or external relations,Procedures,8
+8,Process innovation,Processes,28,"Methods of organising work responsibility, decision making or human resource management",Work & HR,8.7
+9,Process innovation,Processes,28,"Marketing methods for promotion, packaging, pricing, product placement or after sales service",Marketing,8.8
+10,Process innovation,Processes,28,Other processes,Other,0.2

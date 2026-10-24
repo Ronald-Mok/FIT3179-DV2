@@ -1,0 +1,151 @@
+office,destination,city,dest_lon,dest_lat,year,applications,total_abroad
+United States of America,United States,"Washington, D.C.",-77.0114,38.9015,2015,3489,8457
+United States of America,United States,"Washington, D.C.",-77.0114,38.9015,2016,3512,8636
+United States of America,United States,"Washington, D.C.",-77.0114,38.9015,2017,3580,8590
+United States of America,United States,"Washington, D.C.",-77.0114,38.9015,2018,3373,8832
+United States of America,United States,"Washington, D.C.",-77.0114,38.9015,2019,3387,9438
+United States of America,United States,"Washington, D.C.",-77.0114,38.9015,2020,3294,8935
+United States of America,United States,"Washington, D.C.",-77.0114,38.9015,2021,3259,9125
+United States of America,United States,"Washington, D.C.",-77.0114,38.9015,2022,3218,8793
+United States of America,United States,"Washington, D.C.",-77.0114,38.9015,2023,3115,8659
+United States of America,United States,"Washington, D.C.",-77.0114,38.9015,2024,3099,8091
+European Patent Office,European Patent Office,Munich,11.573,48.1319,2015,819,8457
+European Patent Office,European Patent Office,Munich,11.573,48.1319,2016,776,8636
+European Patent Office,European Patent Office,Munich,11.573,48.1319,2017,842,8590
+European Patent Office,European Patent Office,Munich,11.573,48.1319,2018,971,8832
+European Patent Office,European Patent Office,Munich,11.573,48.1319,2019,995,9438
+European Patent Office,European Patent Office,Munich,11.573,48.1319,2020,965,8935
+European Patent Office,European Patent Office,Munich,11.573,48.1319,2021,1026,9125
+European Patent Office,European Patent Office,Munich,11.573,48.1319,2022,1004,8793
+European Patent Office,European Patent Office,Munich,11.573,48.1319,2023,1019,8659
+European Patent Office,European Patent Office,Munich,11.573,48.1319,2024,919,8091
+China,China,Beijing,116.3863,39.9308,2015,635,8457
+China,China,Beijing,116.3863,39.9308,2016,624,8636
+China,China,Beijing,116.3863,39.9308,2017,675,8590
+China,China,Beijing,116.3863,39.9308,2018,700,8832
+China,China,Beijing,116.3863,39.9308,2019,757,9438
+China,China,Beijing,116.3863,39.9308,2020,729,8935
+China,China,Beijing,116.3863,39.9308,2021,740,9125
+China,China,Beijing,116.3863,39.9308,2022,651,8793
+China,China,Beijing,116.3863,39.9308,2023,703,8659
+China,China,Beijing,116.3863,39.9308,2024,687,8091
+Japan,Japan,Tokyo,139.7495,35.687,2015,448,8457
+Japan,Japan,Tokyo,139.7495,35.687,2016,415,8636
+Japan,Japan,Tokyo,139.7495,35.687,2017,431,8590
+Japan,Japan,Tokyo,139.7495,35.687,2018,452,8832
+Japan,Japan,Tokyo,139.7495,35.687,2019,496,9438
+Japan,Japan,Tokyo,139.7495,35.687,2020,485,8935
+Japan,Japan,Tokyo,139.7495,35.687,2021,504,9125
+Japan,Japan,Tokyo,139.7495,35.687,2022,572,8793
+Japan,Japan,Tokyo,139.7495,35.687,2023,517,8659
+Japan,Japan,Tokyo,139.7495,35.687,2024,513,8091
+New Zealand,New Zealand,Wellington,174.7833,-41.3,2015,540,8457
+New Zealand,New Zealand,Wellington,174.7833,-41.3,2016,594,8636
+New Zealand,New Zealand,Wellington,174.7833,-41.3,2017,562,8590
+New Zealand,New Zealand,Wellington,174.7833,-41.3,2018,586,8832
+New Zealand,New Zealand,Wellington,174.7833,-41.3,2019,648,9438
+New Zealand,New Zealand,Wellington,174.7833,-41.3,2020,597,8935
+New Zealand,New Zealand,Wellington,174.7833,-41.3,2021,675,9125
+New Zealand,New Zealand,Wellington,174.7833,-41.3,2022,646,8793
+New Zealand,New Zealand,Wellington,174.7833,-41.3,2023,466,8659
+New Zealand,New Zealand,Wellington,174.7833,-41.3,2024,455,8091
+Canada,Canada,Ottawa,-75.702,45.4186,2015,420,8457
+Canada,Canada,Ottawa,-75.702,45.4186,2016,430,8636
+Canada,Canada,Ottawa,-75.702,45.4186,2017,459,8590
+Canada,Canada,Ottawa,-75.702,45.4186,2018,464,8832
+Canada,Canada,Ottawa,-75.702,45.4186,2019,533,9438
+Canada,Canada,Ottawa,-75.702,45.4186,2020,535,8935
+Canada,Canada,Ottawa,-75.702,45.4186,2021,516,9125
+Canada,Canada,Ottawa,-75.702,45.4186,2022,515,8793
+Canada,Canada,Ottawa,-75.702,45.4186,2023,494,8659
+Canada,Canada,Ottawa,-75.702,45.4186,2024,403,8091
+India,India,New Delhi,77.2,28.6,2015,270,8457
+India,India,New Delhi,77.2,28.6,2016,248,8636
+India,India,New Delhi,77.2,28.6,2017,252,8590
+India,India,New Delhi,77.2,28.6,2018,281,8832
+India,India,New Delhi,77.2,28.6,2019,308,9438
+India,India,New Delhi,77.2,28.6,2020,276,8935
+India,India,New Delhi,77.2,28.6,2021,313,9125
+India,India,New Delhi,77.2,28.6,2022,272,8793
+India,India,New Delhi,77.2,28.6,2023,311,8659
+India,India,New Delhi,77.2,28.6,2024,264,8091
+Republic of Korea,South Korea,Seoul,126.9978,37.5683,2015,174,8457
+Republic of Korea,South Korea,Seoul,126.9978,37.5683,2016,204,8636
+Republic of Korea,South Korea,Seoul,126.9978,37.5683,2017,188,8590
+Republic of Korea,South Korea,Seoul,126.9978,37.5683,2018,199,8832
+Republic of Korea,South Korea,Seoul,126.9978,37.5683,2019,225,9438
+Republic of Korea,South Korea,Seoul,126.9978,37.5683,2020,225,8935
+Republic of Korea,South Korea,Seoul,126.9978,37.5683,2021,227,9125
+Republic of Korea,South Korea,Seoul,126.9978,37.5683,2022,260,8793
+Republic of Korea,South Korea,Seoul,126.9978,37.5683,2023,270,8659
+Republic of Korea,South Korea,Seoul,126.9978,37.5683,2024,224,8091
+"China, Hong Kong SAR",Hong Kong,Hong Kong,114.1831,22.3069,2015,153,8457
+"China, Hong Kong SAR",Hong Kong,Hong Kong,114.1831,22.3069,2016,189,8636
+"China, Hong Kong SAR",Hong Kong,Hong Kong,114.1831,22.3069,2017,156,8590
+"China, Hong Kong SAR",Hong Kong,Hong Kong,114.1831,22.3069,2018,184,8832
+"China, Hong Kong SAR",Hong Kong,Hong Kong,114.1831,22.3069,2019,193,9438
+"China, Hong Kong SAR",Hong Kong,Hong Kong,114.1831,22.3069,2020,175,8935
+"China, Hong Kong SAR",Hong Kong,Hong Kong,114.1831,22.3069,2021,187,9125
+"China, Hong Kong SAR",Hong Kong,Hong Kong,114.1831,22.3069,2022,159,8793
+"China, Hong Kong SAR",Hong Kong,Hong Kong,114.1831,22.3069,2023,153,8659
+"China, Hong Kong SAR",Hong Kong,Hong Kong,114.1831,22.3069,2024,158,8091
+Singapore,Singapore,Singapore,103.8539,1.295,2015,155,8457
+Singapore,Singapore,Singapore,103.8539,1.295,2016,181,8636
+Singapore,Singapore,Singapore,103.8539,1.295,2017,151,8590
+Singapore,Singapore,Singapore,103.8539,1.295,2018,192,8832
+Singapore,Singapore,Singapore,103.8539,1.295,2019,200,9438
+Singapore,Singapore,Singapore,103.8539,1.295,2020,187,8935
+Singapore,Singapore,Singapore,103.8539,1.295,2021,202,9125
+Singapore,Singapore,Singapore,103.8539,1.295,2022,197,8793
+Singapore,Singapore,Singapore,103.8539,1.295,2023,162,8659
+Singapore,Singapore,Singapore,103.8539,1.295,2024,149,8091
+Brazil,Brazil,Brasília,-47.918,-15.7814,2015,183,8457
+Brazil,Brazil,Brasília,-47.918,-15.7814,2016,160,8636
+Brazil,Brazil,Brasília,-47.918,-15.7814,2017,156,8590
+Brazil,Brazil,Brasília,-47.918,-15.7814,2018,141,8832
+Brazil,Brazil,Brasília,-47.918,-15.7814,2019,187,9438
+Brazil,Brazil,Brasília,-47.918,-15.7814,2020,168,8935
+Brazil,Brazil,Brasília,-47.918,-15.7814,2021,198,9125
+Brazil,Brazil,Brasília,-47.918,-15.7814,2022,157,8793
+Brazil,Brazil,Brasília,-47.918,-15.7814,2023,193,8659
+Brazil,Brazil,Brasília,-47.918,-15.7814,2024,146,8091
+South Africa,South Africa,Pretoria,28.2275,-25.705,2015,188,8457
+South Africa,South Africa,Pretoria,28.2275,-25.705,2016,193,8636
+South Africa,South Africa,Pretoria,28.2275,-25.705,2017,164,8590
+South Africa,South Africa,Pretoria,28.2275,-25.705,2018,176,8832
+South Africa,South Africa,Pretoria,28.2275,-25.705,2019,196,9438
+South Africa,South Africa,Pretoria,28.2275,-25.705,2020,158,8935
+South Africa,South Africa,Pretoria,28.2275,-25.705,2021,168,9125
+South Africa,South Africa,Pretoria,28.2275,-25.705,2022,141,8793
+South Africa,South Africa,Pretoria,28.2275,-25.705,2023,148,8659
+South Africa,South Africa,Pretoria,28.2275,-25.705,2024,133,8091
+Mexico,Mexico,Mexico City,-99.1329,19.4444,2015,97,8457
+Mexico,Mexico,Mexico City,-99.1329,19.4444,2016,118,8636
+Mexico,Mexico,Mexico City,-99.1329,19.4444,2017,110,8590
+Mexico,Mexico,Mexico City,-99.1329,19.4444,2018,113,8832
+Mexico,Mexico,Mexico City,-99.1329,19.4444,2019,134,9438
+Mexico,Mexico,Mexico City,-99.1329,19.4444,2020,115,8935
+Mexico,Mexico,Mexico City,-99.1329,19.4444,2021,124,9125
+Mexico,Mexico,Mexico City,-99.1329,19.4444,2022,109,8793
+Mexico,Mexico,Mexico City,-99.1329,19.4444,2023,127,8659
+Mexico,Mexico,Mexico City,-99.1329,19.4444,2024,102,8091
+United Kingdom,United Kingdom,London,-0.1187,51.5019,2015,87,8457
+United Kingdom,United Kingdom,London,-0.1187,51.5019,2016,111,8636
+United Kingdom,United Kingdom,London,-0.1187,51.5019,2017,130,8590
+United Kingdom,United Kingdom,London,-0.1187,51.5019,2018,122,8832
+United Kingdom,United Kingdom,London,-0.1187,51.5019,2019,130,9438
+United Kingdom,United Kingdom,London,-0.1187,51.5019,2020,121,8935
+United Kingdom,United Kingdom,London,-0.1187,51.5019,2021,112,9125
+United Kingdom,United Kingdom,London,-0.1187,51.5019,2022,141,8793
+United Kingdom,United Kingdom,London,-0.1187,51.5019,2023,92,8659
+United Kingdom,United Kingdom,London,-0.1187,51.5019,2024,101,8091
+Chile,Chile,Santiago,-70.669,-33.4481,2015,62,8457
+Chile,Chile,Santiago,-70.669,-33.4481,2016,70,8636
+Chile,Chile,Santiago,-70.669,-33.4481,2017,57,8590
+Chile,Chile,Santiago,-70.669,-33.4481,2018,66,8832
+Chile,Chile,Santiago,-70.669,-33.4481,2019,81,9438
+Chile,Chile,Santiago,-70.669,-33.4481,2020,83,8935
+Chile,Chile,Santiago,-70.669,-33.4481,2021,90,9125
+Chile,Chile,Santiago,-70.669,-33.4481,2022,78,8793
+Chile,Chile,Santiago,-70.669,-33.4481,2023,90,8659
+Chile,Chile,Santiago,-70.669,-33.4481,2024,79,8091

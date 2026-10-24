@@ -1,0 +1,33 @@
+state,abbr,year,berd_pct_gsp,reliability,berd_000
+New South Wales,NSW,2023-24,1.17,,9630417
+Victoria,VIC,2023-24,1.15,,6952856
+Queensland,QLD,2023-24,0.59,,3014790
+South Australia,SA,2023-24,0.68,,1013732
+Western Australia,WA,2023-24,0.43,,1961763
+Tasmania,TAS,2023-24,0.85,,356436
+Northern Territory,NT,2023-24,0.17,,56526
+Australian Capital Territory,ACT,2023-24,0.39,,215136
+New South Wales,NSW,2021-22,1.06,,
+Victoria,VIC,2021-22,1.14,,
+Queensland,QLD,2021-22,0.56,,
+South Australia,SA,2021-22,0.52,,
+Western Australia,WA,2021-22,0.42,,
+Tasmania,TAS,2021-22,0.76,,
+Northern Territory,NT,2021-22,,"ABS: relative standard error over 50%, too unreliable for general use",
+Australian Capital Territory,ACT,2021-22,0.41,,
+New South Wales,NSW,2019-20,1.03,,
+Victoria,VIC,2019-20,1.04,,
+Queensland,QLD,2019-20,0.62,,
+South Australia,SA,2019-20,0.65,,
+Western Australia,WA,2019-20,0.45,,
+Tasmania,TAS,2019-20,0.78,,
+Northern Territory,NT,2019-20,0.18,,
+Australian Capital Territory,ACT,2019-20,0.44,,
+New South Wales,NSW,2017-18,1.14,,
+Victoria,VIC,2017-18,1.03,,
+Queensland,QLD,2017-18,0.55,,
+South Australia,SA,2017-18,0.76,,
+Western Australia,WA,2017-18,0.62,,
+Tasmania,TAS,2017-18,0.60,,
+Northern Territory,NT,2017-18,0.13,,
+Australian Capital Territory,ACT,2017-18,0.58,,

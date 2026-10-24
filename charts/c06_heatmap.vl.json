@@ -1,0 +1,623 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "C6 Heatmap: % of businesses in each industry that introduced each type of innovation in 2024-25 (ABS). Rows are sorted by the % innovation-active. Columns are grouped into technological change (products and processes) and organisational and marketing change, following the Oslo Manual's earlier split. The outlined cell in each column is the industry that leads that type. Hovering over a row highlights it.",
+  "data": {
+    "url": "data/innovation_by_industry_2024-25.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "innovation_active": "number",
+        "goods": "number",
+        "services": "number",
+        "production": "number",
+        "logistics": "number",
+        "it_comms": "number",
+        "admin": "number",
+        "procedures": "number",
+        "work_hr": "number",
+        "marketing": "number"
+      }
+    }
+  },
+  "transform": [
+    {
+      "fold": [
+        "innovation_active",
+        "goods",
+        "services",
+        "production",
+        "logistics",
+        "it_comms",
+        "admin",
+        "procedures",
+        "work_hr",
+        "marketing"
+      ],
+      "as": [
+        "measure",
+        "value"
+      ]
+    },
+    {
+      "lookup": "measure",
+      "from": {
+        "data": {
+          "values": [
+            {
+              "measure": "innovation_active",
+              "order": 0,
+              "label": "Innovation-active",
+              "group": "Overall",
+              "full": "Any innovation activity (innovation-active)"
+            },
+            {
+              "measure": "goods",
+              "order": 1,
+              "label": "Goods",
+              "group": "Technological change",
+              "full": "New or improved goods"
+            },
+            {
+              "measure": "services",
+              "order": 2,
+              "label": "Services",
+              "group": "Technological change",
+              "full": "New or improved services"
+            },
+            {
+              "measure": "production",
+              "order": 3,
+              "label": "Production",
+              "group": "Technological change",
+              "full": "Methods for producing goods or providing services"
+            },
+            {
+              "measure": "logistics",
+              "order": 4,
+              "label": "Logistics",
+              "group": "Technological change",
+              "full": "Logistics, delivery and distribution methods"
+            },
+            {
+              "measure": "it_comms",
+              "order": 5,
+              "label": "IT & comms",
+              "group": "Technological change",
+              "full": "Methods for information processing or communication"
+            },
+            {
+              "measure": "admin",
+              "order": 6,
+              "label": "Admin",
+              "group": "Technological change",
+              "full": "Methods for accounting or other administrative operations"
+            },
+            {
+              "measure": "procedures",
+              "order": 7,
+              "label": "Procedures",
+              "group": "Organisational and marketing change",
+              "full": "Methods of organising internal procedures or external relations"
+            },
+            {
+              "measure": "work_hr",
+              "order": 8,
+              "label": "Work & HR",
+              "group": "Organisational and marketing change",
+              "full": "Methods of organising work responsibility, decision making or HR"
+            },
+            {
+              "measure": "marketing",
+              "order": 9,
+              "label": "Marketing",
+              "group": "Organisational and marketing change",
+              "full": "Marketing methods (promotion, packaging, pricing, placement, after-sales)"
+            }
+          ]
+        },
+        "key": "measure",
+        "fields": [
+          "order",
+          "label",
+          "group",
+          "full"
+        ]
+      }
+    },
+    {
+      "joinaggregate": [
+        {
+          "op": "max",
+          "field": "value",
+          "as": "column_max"
+        }
+      ],
+      "groupby": [
+        "measure"
+      ]
+    },
+    {
+      "calculate": "datum.value === datum.column_max",
+      "as": "leads"
+    },
+    {
+      "calculate": "datum.value / 100",
+      "as": "share"
+    }
+  ],
+  "params": [
+    {
+      "name": "row",
+      "select": {
+        "type": "point",
+        "fields": [
+          "industry"
+        ],
+        "on": "mouseover",
+        "clear": "mouseout"
+      },
+      "views": [
+        "cells_overall",
+        "cells_tech",
+        "cells_org"
+      ]
+    }
+  ],
+  "spacing": 16,
+  "hconcat": [
+    {
+      "title": {
+        "text": "Overall",
+        "anchor": "start",
+        "fontSize": 12,
+        "fontWeight": 600,
+        "color": "#1d2125",
+        "offset": 8
+      },
+      "transform": [
+        {
+          "filter": "datum.group === 'Overall'"
+        }
+      ],
+      "width": {
+        "step": 66
+      },
+      "height": {
+        "step": 26
+      },
+      "encoding": {
+        "y": {
+          "field": "industry",
+          "type": "nominal",
+          "sort": {
+            "field": "innovation_active",
+            "op": "max",
+            "order": "descending"
+          },
+          "title": null,
+          "axis": {
+            "domain": false,
+            "ticks": false,
+            "labelPadding": 8,
+            "labelLimit": 200,
+            "labelFontWeight": {
+              "condition": {
+                "test": "datum.value === 'Retail' || datum.value === 'Transport'",
+                "value": 700
+              },
+              "value": 400
+            },
+            "labelColor": {
+              "condition": {
+                "test": "datum.value === 'Retail' || datum.value === 'Transport'",
+                "value": "#1d2125"
+              },
+              "value": "#5b6470"
+            }
+          }
+        },
+        "x": {
+          "field": "label",
+          "type": "nominal",
+          "sort": null,
+          "title": null,
+          "axis": {
+            "orient": "top",
+            "labelAngle": 0,
+            "domain": false,
+            "ticks": false,
+            "labelLimit": 200
+          }
+        }
+      },
+      "layer": [
+        {
+          "mark": {
+            "type": "rect"
+          },
+          "encoding": {
+            "color": {
+              "field": "value",
+              "type": "quantitative",
+              "title": "% of businesses, 2024–25",
+              "scale": {
+                "domain": [
+                  0,
+                  60
+                ]
+              },
+              "legend": {
+                "orient": "bottom",
+                "direction": "horizontal",
+                "gradientLength": 220,
+                "titleLimit": 300
+              }
+            },
+            "stroke": {
+              "condition": {
+                "test": "datum.leads",
+                "value": "#1d2125"
+              },
+              "value": "#ffffff"
+            },
+            "strokeWidth": {
+              "condition": {
+                "test": "datum.leads",
+                "value": 2.5
+              },
+              "value": 1.5
+            },
+            "opacity": {
+              "condition": {
+                "param": "row",
+                "empty": true,
+                "value": 1
+              },
+              "value": 0.35
+            },
+            "tooltip": [
+              {
+                "field": "industry",
+                "title": "Industry"
+              },
+              {
+                "field": "anzsic_division",
+                "title": "ABS industry"
+              },
+              {
+                "field": "full",
+                "title": "Type of innovation"
+              },
+              {
+                "field": "share",
+                "title": "Businesses that introduced it",
+                "format": ".1%"
+              }
+            ]
+          },
+          "name": "cells_overall"
+        },
+        {
+          "mark": {
+            "type": "text",
+            "fontSize": 11
+          },
+          "encoding": {
+            "text": {
+              "field": "value",
+              "type": "quantitative",
+              "format": ".0f"
+            },
+            "color": {
+              "condition": {
+                "test": "datum.value >= 38",
+                "value": "#ffffff"
+              },
+              "value": "#1d2125"
+            },
+            "opacity": {
+              "condition": {
+                "param": "row",
+                "empty": true,
+                "value": 1
+              },
+              "value": 0.35
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "text": "Technological change",
+        "anchor": "start",
+        "fontSize": 12,
+        "fontWeight": 600,
+        "color": "#1d2125",
+        "offset": 8
+      },
+      "transform": [
+        {
+          "filter": "datum.group === 'Technological change'"
+        }
+      ],
+      "width": {
+        "step": 66
+      },
+      "height": {
+        "step": 26
+      },
+      "encoding": {
+        "y": {
+          "field": "industry",
+          "type": "nominal",
+          "sort": {
+            "field": "innovation_active",
+            "op": "max",
+            "order": "descending"
+          },
+          "title": null,
+          "axis": null
+        },
+        "x": {
+          "field": "label",
+          "type": "nominal",
+          "sort": null,
+          "title": null,
+          "axis": {
+            "orient": "top",
+            "labelAngle": 0,
+            "domain": false,
+            "ticks": false,
+            "labelLimit": 200
+          }
+        }
+      },
+      "layer": [
+        {
+          "mark": {
+            "type": "rect"
+          },
+          "encoding": {
+            "color": {
+              "field": "value",
+              "type": "quantitative",
+              "title": "% of businesses, 2024–25",
+              "scale": {
+                "domain": [
+                  0,
+                  60
+                ]
+              },
+              "legend": {
+                "orient": "bottom",
+                "direction": "horizontal",
+                "gradientLength": 220,
+                "titleLimit": 300
+              }
+            },
+            "stroke": {
+              "condition": {
+                "test": "datum.leads",
+                "value": "#1d2125"
+              },
+              "value": "#ffffff"
+            },
+            "strokeWidth": {
+              "condition": {
+                "test": "datum.leads",
+                "value": 2.5
+              },
+              "value": 1.5
+            },
+            "opacity": {
+              "condition": {
+                "param": "row",
+                "empty": true,
+                "value": 1
+              },
+              "value": 0.35
+            },
+            "tooltip": [
+              {
+                "field": "industry",
+                "title": "Industry"
+              },
+              {
+                "field": "anzsic_division",
+                "title": "ABS industry"
+              },
+              {
+                "field": "full",
+                "title": "Type of innovation"
+              },
+              {
+                "field": "share",
+                "title": "Businesses that introduced it",
+                "format": ".1%"
+              }
+            ]
+          },
+          "name": "cells_tech"
+        },
+        {
+          "mark": {
+            "type": "text",
+            "fontSize": 11
+          },
+          "encoding": {
+            "text": {
+              "field": "value",
+              "type": "quantitative",
+              "format": ".0f"
+            },
+            "color": {
+              "condition": {
+                "test": "datum.value >= 38",
+                "value": "#ffffff"
+              },
+              "value": "#1d2125"
+            },
+            "opacity": {
+              "condition": {
+                "param": "row",
+                "empty": true,
+                "value": 1
+              },
+              "value": 0.35
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "text": "Organisational and marketing change",
+        "anchor": "start",
+        "fontSize": 12,
+        "fontWeight": 600,
+        "color": "#1d2125",
+        "offset": 8
+      },
+      "transform": [
+        {
+          "filter": "datum.group === 'Organisational and marketing change'"
+        }
+      ],
+      "width": {
+        "step": 66
+      },
+      "height": {
+        "step": 26
+      },
+      "encoding": {
+        "y": {
+          "field": "industry",
+          "type": "nominal",
+          "sort": {
+            "field": "innovation_active",
+            "op": "max",
+            "order": "descending"
+          },
+          "title": null,
+          "axis": null
+        },
+        "x": {
+          "field": "label",
+          "type": "nominal",
+          "sort": null,
+          "title": null,
+          "axis": {
+            "orient": "top",
+            "labelAngle": 0,
+            "domain": false,
+            "ticks": false,
+            "labelLimit": 200
+          }
+        }
+      },
+      "layer": [
+        {
+          "mark": {
+            "type": "rect"
+          },
+          "encoding": {
+            "color": {
+              "field": "value",
+              "type": "quantitative",
+              "title": "% of businesses, 2024–25",
+              "scale": {
+                "domain": [
+                  0,
+                  60
+                ]
+              },
+              "legend": {
+                "orient": "bottom",
+                "direction": "horizontal",
+                "gradientLength": 220,
+                "titleLimit": 300
+              }
+            },
+            "stroke": {
+              "condition": {
+                "test": "datum.leads",
+                "value": "#1d2125"
+              },
+              "value": "#ffffff"
+            },
+            "strokeWidth": {
+              "condition": {
+                "test": "datum.leads",
+                "value": 2.5
+              },
+              "value": 1.5
+            },
+            "opacity": {
+              "condition": {
+                "param": "row",
+                "empty": true,
+                "value": 1
+              },
+              "value": 0.35
+            },
+            "tooltip": [
+              {
+                "field": "industry",
+                "title": "Industry"
+              },
+              {
+                "field": "anzsic_division",
+                "title": "ABS industry"
+              },
+              {
+                "field": "full",
+                "title": "Type of innovation"
+              },
+              {
+                "field": "share",
+                "title": "Businesses that introduced it",
+                "format": ".1%"
+              }
+            ]
+          },
+          "name": "cells_org"
+        },
+        {
+          "mark": {
+            "type": "text",
+            "fontSize": 11
+          },
+          "encoding": {
+            "text": {
+              "field": "value",
+              "type": "quantitative",
+              "format": ".0f"
+            },
+            "color": {
+              "condition": {
+                "test": "datum.value >= 38",
+                "value": "#ffffff"
+              },
+              "value": "#1d2125"
+            },
+            "opacity": {
+              "condition": {
+                "param": "row",
+                "empty": true,
+                "value": 1
+              },
+              "value": 0.35
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "resolve": {
+    "scale": {
+      "y": "shared",
+      "color": "shared"
+    }
+  }
+}

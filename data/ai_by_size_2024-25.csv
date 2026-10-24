@@ -1,0 +1,6 @@
+size,order,ai_innovation_active,ai_not_innovation_active,ai_all_businesses
+Micro (0–4 people),1,18,6,10.7
+Small (5–19 people),2,19,4,12.3
+Medium (20–199 people),3,28,13,22.3
+Large (200+ people),4,37,29,34.7
+All businesses,0,20,6,12.1

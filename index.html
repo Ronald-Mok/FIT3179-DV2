@@ -1,0 +1,915 @@
+<!doctype html>
+<html lang="en-AU">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ideas at Work: How Australian Businesses Innovate</title>
+    <meta
+      name="description"
+      content="A data story about innovation in Australian businesses: who innovates, where, how it has changed, and what holds businesses back."
+    />
+    <meta name="author" content="Mok Weng Cheong Ronald" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.30.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.21.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.26.0"></script>
+    <script src="js/main.js" defer></script>
+  </head>
+  <body>
+    <!-- Draft text: headings and copy are finalised in Task 9. Empty .chart slots show a placeholder until their spec is added in js/main.js. -->
+
+    <header class="hero">
+      <div class="container">
+        <p class="kicker">Business innovation in Australia</p>
+        <h1>Ideas at Work</h1>
+        <p class="hero-sub">
+          How Australian businesses innovate, who leads, and what holds the rest
+          back.
+        </p>
+        <p class="byline">
+          By Mok Weng Cheong Ronald · Updated 24 October 2026 · Data: ABS, IP
+          Australia, WIPO, OECD
+        </p>
+        <p class="hero-intro">
+          Almost half of Australian businesses tried something new in 2024–25,
+          from a café taking online orders to a manufacturer launching a new
+          product. Seven questions take you through who is innovating, where,
+          how it has changed, and what is stopping the rest.
+        </p>
+        <nav class="toc" aria-label="The seven questions">
+          <ol>
+            <li><a href="#s1">What is business innovation?</a></li>
+            <li><a href="#s2">How innovative are Australian businesses?</a></li>
+            <li><a href="#s3">Which industries are leading innovation?</a></li>
+            <li><a href="#s4">Does business size matter?</a></li>
+            <li><a href="#s5">How do the states compare?</a></li>
+            <li><a href="#s6">How has innovation changed over time?</a></li>
+            <li><a href="#s7">What prevents businesses from innovating?</a></li>
+          </ol>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- S1 -->
+      <section id="s1" class="story-section">
+        <div class="container">
+          <header class="section-head">
+            <p class="section-num">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7"/><path d="M9 16a5 5 0 1 1 6 0a3.5 3.5 0 0 0 -1 3a2 2 0 0 1 -4 0a3.5 3.5 0 0 0 -1 -3"/><path d="M9.7 17l4.6 0"/></svg>
+              <span>01</span>
+            </p>
+            <h2>What is business innovation?</h2>
+            <p class="lead">
+              Any new or improved product, or new way of running a business,
+              counts. Innovation comes in two types.
+            </p>
+          </header>
+
+          <div class="row row-c">
+            <article class="card card-type card-goods">
+              <h3>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5"/><path d="M12 12l8 -4.5"/><path d="M12 12l0 9"/><path d="M12 12l-8 -4.5"/><path d="M16 5.25l-8 4.5"/></svg>
+                Goods &amp; services innovation
+              </h3>
+              <p>Selling something new or noticeably improved.</p>
+              <ul>
+                <li>A bakery launches a gluten-free range.</li>
+                <li>A bank releases a new mobile app.</li>
+              </ul>
+            </article>
+            <article class="card card-type card-process">
+              <h3>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/></svg>
+                Process innovation
+              </h3>
+              <p>
+                A new or improved way of working: making, delivering, marketing,
+                IT systems or management.
+              </p>
+              <ul>
+                <li>A café starts taking online orders.</li>
+                <li>A builder moves to new scheduling software.</li>
+              </ul>
+            </article>
+          </div>
+
+          <div class="row row-a">
+            <div class="text-col">
+              <aside class="card card-note">
+                <h3>Innovation-active</h3>
+                <p>
+                  A business that introduced an innovation, or was still working
+                  on one (including attempts it abandoned). This is the main
+                  measure used on this page.
+                </p>
+              </aside>
+              <p>
+                The Australian Bureau of Statistics (ABS) follows the
+                <em>Oslo Manual</em>, the international guide to measuring
+                innovation written by the OECD and Eurostat.
+              </p>
+              <p>
+                The chart counts innovations, not businesses. A business that
+                introduced a new service and a new marketing method counts once
+                for each. Hover over a slice to see how many businesses
+                introduced it.
+              </p>
+            </div>
+            <figure class="chart-block">
+              <h3 class="chart-title">
+                Seven in ten innovations change how a business works
+              </h3>
+              <p class="chart-subtitle">
+                Share of all innovations reported, by type and sub-type, 2024–25
+              </p>
+              <div
+                class="chart"
+                id="c01"
+                data-label="C1 · Sunburst"
+                data-task="Task 1"
+              ></div>
+              <figcaption class="source">
+                Source: ABS,
+                <em>Characteristics of Australian Business, 2024–25</em>
+                (Innovation activity, Tables 3 and 7)
+              </figcaption>
+            </figure>
+          </div>
+
+          <p class="transition">
+            So how many Australian businesses are actually doing this?
+          </p>
+        </div>
+      </section>
+
+      <!-- S2 -->
+      <section id="s2" class="story-section">
+        <div class="container">
+          <header class="section-head">
+            <p class="section-num">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10 3.2a9 9 0 1 0 10.8 10.8a1 1 0 0 0 -1 -1h-3.8a4.1 4.1 0 1 1 -5 -5v-4a.9 .9 0 0 0 -1 -.8"/><path d="M15 3.5a9 9 0 0 1 5.5 5.5h-4.5a9 9 0 0 0 -1 -1v-4.5"/></svg>
+              <span>02</span>
+            </p>
+            <h2>How innovative are Australian businesses?</h2>
+            <p class="lead">
+              Almost half are innovation-active, and Australia sits in the
+              world's top 20 on innovation.
+            </p>
+          </header>
+
+          <h3 class="subhead">At home</h3>
+          <div class="row row-a">
+            <div class="text-col">
+              <p class="big-stat big-stat--active">46%</p>
+              <p>of Australian businesses were innovation-active in 2024–25.</p>
+              <p>
+                Pick a business size under the chart: the bigger the business,
+                the more likely it is to innovate.
+              </p>
+            </div>
+            <figure class="chart-block">
+              <h3 class="chart-title">
+                Almost half of businesses are innovation-active
+              </h3>
+              <p class="chart-subtitle">
+                If Australia had 100 businesses, 2024–25
+              </p>
+              <div
+                class="chart"
+                id="c02"
+                data-label="C2 · Waffle chart"
+                data-task="Task 2"
+              ></div>
+              <figcaption class="source">
+                Source: ABS,
+                <em
+                  >Characteristics of Australian Business, 2024–25 (Innovation
+                  activity, Table 2)</em
+                >
+              </figcaption>
+            </figure>
+          </div>
+
+          <h3 class="subhead">Against the world</h3>
+          <figure class="chart-block row-b">
+            <h3 class="chart-title">Australia ranks 20th of 139 economies</h3>
+            <p class="chart-subtitle">
+              Global Innovation Index 2026 score (0–100). Grey = not in the
+              index; circles = economies too small to show on the map
+            </p>
+            <div
+              class="chart chart-map"
+              id="c03"
+              data-label="C3 · Choropleth map (world)"
+              data-task="Task 2"
+            ></div>
+            <figcaption class="source">
+              Source: WIPO, <em>Global Innovation Index 2026</em>. Map: Natural
+              Earth (public domain)
+            </figcaption>
+          </figure>
+
+          <div class="row row-a">
+            <div class="text-col">
+              <p>
+                Innovation tends to gather in cities. WIPO ranks the world's top
+                100 innovation clusters by their patents, scientific articles
+                and venture capital deals.
+              </p>
+              <p>
+                Australia has two: Sydney (38th) and Melbourne (53rd). Both hold
+                a bigger share of the world's scientific articles and venture
+                capital deals than of its patents.
+              </p>
+            </div>
+            <figure class="chart-block">
+              <h3 class="chart-title">
+                Sydney and Melbourne are world top-100 innovation hubs
+              </h3>
+              <p class="chart-subtitle">
+                Top 100 innovation clusters, 2026. Circle area = average share of
+                the world's patent applications, scientific articles and venture
+                capital deals
+              </p>
+              <div
+                class="chart chart-map"
+                id="c04"
+                data-label="C4 · Proportional symbol map"
+                data-task="Task 2"
+              ></div>
+              <figcaption class="source">
+                Source: WIPO, <em>Global Innovation Index 2026</em> (innovation
+                cluster ranking). Circles sit on each cluster's main city.
+                Locations: Natural Earth
+              </figcaption>
+            </figure>
+          </div>
+
+          <figure class="chart-block row-b">
+            <h3 class="chart-title">
+              More than a third of the patents Australians file overseas go to
+              the US
+            </h3>
+            <p class="chart-subtitle">
+              Patent applications filed abroad by Australian applicants, to the
+              15 largest destination offices. Line width = applications. Use the
+              slider to see 2015–2024
+            </p>
+            <div
+              class="chart chart-map"
+              id="c05"
+              data-label="C5 · Flow map"
+              data-task="Task 2"
+            ></div>
+            <figcaption class="source">
+              Source: WIPO IP Statistics Data Center (total patent applications
+              by filing office and applicant's origin), as reported in IP
+              Australia, <em>Australian IP Report 2026</em>. Lines run from the
+              centre of Australia to each office's capital city (the European
+              Patent Office: Munich)
+            </figcaption>
+          </figure>
+
+          <p class="transition">
+            Nearly half of businesses are innovating, but not evenly. Which
+            industries lead?
+          </p>
+        </div>
+      </section>
+
+      <!-- S3 -->
+      <section id="s3" class="story-section">
+        <div class="container">
+          <header class="section-head">
+            <p class="section-num">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 21h18"/><path d="M5 21v-12l5 4v-4l5 4h4"/><path d="M19 21v-8l-1.436 -9.574a.5 .5 0 0 0 -.495 -.426h-1.145a.5 .5 0 0 0 -.494 .418l-1.43 8.582"/><path d="M9 17h1"/><path d="M14 17h1"/></svg>
+              <span>03</span>
+            </p>
+            <h2>Which industries are leading innovation?</h2>
+            <p class="lead">
+              The industries that innovate most often aren't the ones that spend
+              the most on research.
+            </p>
+          </header>
+
+          <figure class="chart-block row-b">
+            <h3 class="chart-title">
+              Retailers innovate most often; transport least
+            </h3>
+            <p class="chart-subtitle">
+              % of businesses in each industry that introduced each type of
+              innovation, 2024–25. Rows are sorted by the share innovation-active;
+              the outlined cell in each column is the industry that leads it.
+              Hover over a row to highlight it
+            </p>
+            <div
+              class="chart"
+              id="c06"
+              data-label="C6 · Heatmap"
+              data-task="Task 3"
+            ></div>
+            <figcaption class="source">
+              Source: ABS,
+              <em>Characteristics of Australian Business, 2024–25</em>
+              (Innovation activity, Tables 2, 3 and 7). Column groups follow the
+              Oslo Manual's technological vs organisational and marketing split
+            </figcaption>
+          </figure>
+
+          <div class="row row-a">
+            <div class="text-col">
+              <p>
+                Retail has the highest share of innovation-active businesses
+                (59%), but professional, scientific and technical services
+                account for 38% of all business spending on research and
+                development (R&amp;D).
+              </p>
+            </div>
+            <figure class="chart-block">
+              <h3 class="chart-title">
+                Professional and scientific services spend the most on R&amp;D
+              </h3>
+              <p class="chart-subtitle">
+                Business R&amp;D spending by industry, 2023–24. Dot colour = %
+                of businesses innovation-active, 2024–25
+              </p>
+              <div
+                class="chart"
+                id="c07"
+                data-label="C7 · Lollipop chart"
+                data-task="Task 3"
+              ></div>
+              <figcaption class="source">
+                Source: ABS,
+                <em
+                  >Research and Experimental Development, Businesses, Australia,
+                  2023–24</em
+                >; ABS, <em>Characteristics of Australian Business, 2024–25</em>.
+                Public administration and education ($0.17b) are not shown
+                because the innovation survey does not cover them
+              </figcaption>
+            </figure>
+          </div>
+
+          <p class="transition">
+            Industry is only part of the story. Does the size of a business
+            matter?
+          </p>
+        </div>
+      </section>
+
+      <!-- S4 -->
+      <section id="s4" class="story-section">
+        <div class="container">
+          <header class="section-head">
+            <p class="section-num">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 21l18 0"/><path d="M5 21v-14l8 -4v18"/><path d="M19 21v-10l-6 -4"/><path d="M9 9l0 .01"/><path d="M9 12l0 .01"/><path d="M9 15l0 .01"/><path d="M9 18l0 .01"/></svg>
+              <span>04</span>
+            </p>
+            <h2>Does business size matter?</h2>
+            <p class="lead">
+              Yes. 71% of large businesses are innovation-active, but only 39%
+              of micro businesses.
+            </p>
+          </header>
+
+          <div class="row row-c">
+            <figure class="chart-block">
+              <h3 class="chart-title">
+                Micro businesses are the majority, and the least innovative
+              </h3>
+              <p class="chart-subtitle">
+                Wider column = more businesses. Height shows what businesses of
+                each size did, 2024–25; labels give the % innovation-active
+              </p>
+              <div
+                class="chart"
+                id="c08"
+                data-label="C8 · Marimekko chart"
+                data-task="Task 4"
+              ></div>
+              <figcaption class="source">
+                Source: ABS,
+                <em>Characteristics of Australian Business, 2024–25</em>
+                (Innovation activity, Table 2)
+              </figcaption>
+            </figure>
+            <figure class="chart-block">
+              <h3 class="chart-title">
+                Innovators are three times as likely to use AI
+              </h3>
+              <p class="chart-subtitle">
+                % of businesses using artificial intelligence, by size and
+                innovation status, 2024–25
+              </p>
+              <div
+                class="chart"
+                id="c09"
+                data-label="C9 · Dumbbell chart"
+                data-task="Task 4"
+              ></div>
+              <figcaption class="source">
+                Source: ABS,
+                <em>Characteristics of Australian Business, 2024–25</em>
+                (table: business use of AI, by innovation status, by employment
+                size; and data cube 6, Table 2)
+              </figcaption>
+            </figure>
+          </div>
+
+          <p class="transition">Size matters. Does location?</p>
+        </div>
+      </section>
+
+      <!-- S5 -->
+      <section id="s5" class="story-section">
+        <div class="container">
+          <header class="section-head">
+            <p class="section-num">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 18.5l-3 -1.5l-6 3v-13l6 -3l6 3l6 -3v7.5"/><path d="M9 4v13"/><path d="M15 7v5.5"/><path d="M21.121 20.121a3 3 0 1 0 -4.242 0c.418 .419 1.125 1.045 2.121 1.879c1.051 -.89 1.759 -1.516 2.121 -1.879z"/><path d="M19 18v.01"/></svg>
+              <span>05</span>
+            </p>
+            <h2>How do the states compare?</h2>
+            <p class="lead">
+              Business R&amp;D is concentrated in New South Wales and Victoria.
+            </p>
+          </header>
+
+          <div class="row row-a">
+            <div class="text-col">
+              <p>
+                To compare states fairly, R&amp;D spending is shown as a share
+                of each state's economy (its gross state product), not as a
+                dollar total.
+              </p>
+            </div>
+            <figure class="chart-block">
+              <h3 class="chart-title">
+                NSW and Victoria invest the most in R&amp;D
+              </h3>
+              <p class="chart-subtitle">
+                Business R&amp;D as % of gross state product, 2023–24
+              </p>
+              <div
+                class="chart chart-map"
+                id="c10"
+                data-label="C10 · Choropleth map (Australia)"
+                data-task="Task 5"
+              ></div>
+              <figcaption class="source">
+                Source: ABS,
+                <em
+                  >Research and Experimental Development, Businesses, Australia,
+                  2023–24</em
+                >
+              </figcaption>
+            </figure>
+          </div>
+
+          <div class="row row-c">
+            <figure class="chart-block">
+              <h3 class="chart-title">
+                Where Australia's inventions come from
+              </h3>
+              <p class="chart-subtitle">
+                Patent applications by Australian applicants (one dot = one
+                application)
+              </p>
+              <div
+                class="chart chart-map"
+                id="c11"
+                data-label="C11 · Dot map"
+                data-task="Task 5"
+              ></div>
+              <figcaption class="source">
+                Source: IP Australia, <em>IP RAPID</em>
+              </figcaption>
+            </figure>
+            <figure class="chart-block">
+              <h3 class="chart-title">Where new brands come from</h3>
+              <p class="chart-subtitle">
+                Trade mark applications by Australian applicants, per hexagon
+              </p>
+              <div
+                class="chart chart-map"
+                id="c12"
+                data-label="C12 · Bin map"
+                data-task="Task 5"
+              ></div>
+              <figcaption class="source">
+                Source: IP Australia, <em>IP RAPID</em>
+              </figcaption>
+            </figure>
+          </div>
+
+          <div class="row row-a">
+            <div class="text-col">
+              <p>
+                Each measure tells a different part of the story, so the
+                scorecard ranks every state on all of them at once.
+              </p>
+            </div>
+            <figure class="chart-block">
+              <h3 class="chart-title">
+                How the states compare on four measures
+              </h3>
+              <p class="chart-subtitle">
+                Rank of each state or territory (1 = highest), with values
+              </p>
+              <div
+                class="chart"
+                id="c13"
+                data-label="C13 · Scorecard heatmap"
+                data-task="Task 5"
+              ></div>
+              <figcaption class="source">Sources: ABS; IP Australia</figcaption>
+            </figure>
+          </div>
+
+          <p class="transition">
+            These patterns didn't appear overnight. How has innovation changed
+            over time?
+          </p>
+        </div>
+      </section>
+
+      <!-- S6 -->
+      <section id="s6" class="story-section">
+        <div class="container">
+          <header class="section-head">
+            <p class="section-num">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 19l16 0"/><path d="M4 15l4 -6l4 2l4 -5l4 4"/></svg>
+              <span>06</span>
+            </p>
+            <h2>How has innovation changed over time?</h2>
+            <p class="lead">
+              More businesses innovate than in 2006–07, though the way it is
+              measured has changed along the way.
+            </p>
+          </header>
+
+          <div class="row row-a">
+            <div class="text-col">
+              <p>
+                The ABS changed its survey twice: new definitions from 2018–19,
+                and from 2024–25 a question about the past year instead of the
+                past two.
+              </p>
+            </div>
+            <figure class="chart-block">
+              <h3 class="chart-title">
+                More businesses are innovating than in 2006–07
+              </h3>
+              <p class="chart-subtitle">
+                % of businesses innovation-active, 2006–07 to 2024–25
+              </p>
+              <div
+                class="chart"
+                id="c14"
+                data-label="C14 · Line chart"
+                data-task="Task 6"
+              ></div>
+              <figcaption class="source">
+                Sources: Department of Industry, Science and Resources,
+                <em>Australian Innovation Statistics</em>; ABS
+              </figcaption>
+            </figure>
+          </div>
+
+          <figure class="chart-block row-b">
+            <h3 class="chart-title">
+              Industries have swapped places over time
+            </h3>
+            <p class="chart-subtitle">
+              Rank of each industry by % of businesses innovation-active
+            </p>
+            <div
+              class="chart"
+              id="c15"
+              data-label="C15 · Bump chart"
+              data-task="Task 6"
+            ></div>
+            <figcaption class="source">
+              Source: ABS, <em>Characteristics of Australian Business</em>,
+              various years
+            </figcaption>
+          </figure>
+
+          <div class="row row-a">
+            <div class="text-col">
+              <p>
+                Business spending on R&amp;D has stayed at about 0.9% of the
+                economy since 2017–18.
+              </p>
+            </div>
+            <figure class="chart-block">
+              <h3 class="chart-title">
+                Australia's business R&amp;D has stayed flat
+              </h3>
+              <p class="chart-subtitle">
+                Business R&amp;D as % of GDP, Australia and selected OECD
+                countries
+              </p>
+              <div
+                class="chart"
+                id="c16"
+                data-label="C16 · Slope chart"
+                data-task="Task 6"
+              ></div>
+              <figcaption class="source">
+                Source: OECD, <em>Main Science and Technology Indicators</em>
+              </figcaption>
+            </figure>
+          </div>
+
+          <p class="transition">
+            More businesses want to innovate. So what's stopping the rest?
+          </p>
+        </div>
+      </section>
+
+      <!-- S7 -->
+      <section id="s7" class="story-section">
+        <div class="container">
+          <header class="section-head">
+            <p class="section-num">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 7m0 1a1 1 0 0 1 1 -1h14a1 1 0 0 1 1 1v7a1 1 0 0 1 -1 1h-14a1 1 0 0 1 -1 -1z"/><path d="M7 16v4"/><path d="M7.5 16l9 -9"/><path d="M13.5 16l6.5 -6.5"/><path d="M4 13.5l6.5 -6.5"/><path d="M17 16v4"/><path d="M5 20h4"/><path d="M15 20h4"/><path d="M17 7v-2"/><path d="M7 7v-2"/></svg>
+              <span>07</span>
+            </p>
+            <h2>What prevents businesses from innovating?</h2>
+            <p class="lead">
+              Money, not ideas. A lack of funds is the most common barrier.
+            </p>
+          </header>
+
+          <div class="row row-a">
+            <div class="text-col">
+              <p>
+                35% of businesses reported a barrier to innovation in 2024–25,
+                down from 42% in 2022–23.
+              </p>
+            </div>
+            <figure class="chart-block">
+              <h3 class="chart-title">Money is the main barrier</h3>
+              <p class="chart-subtitle">
+                % of businesses reporting each barrier to innovation, 2024–25
+              </p>
+              <div
+                class="chart"
+                id="c17"
+                data-label="C17 · Bar chart"
+                data-task="Task 7"
+              ></div>
+              <figcaption class="source">
+                Source: ABS,
+                <em>Characteristics of Australian Business, 2024–25</em>
+              </figcaption>
+            </figure>
+          </div>
+
+          <div class="row row-a">
+            <div class="text-col">
+              <p>Fewer businesses report barriers than two years ago.</p>
+            </div>
+            <figure class="chart-block">
+              <h3 class="chart-title">
+                Fewer businesses report barriers than two years ago
+              </h3>
+              <p class="chart-subtitle">
+                % of businesses reporting each barrier, 2022–23 and 2024–25
+              </p>
+              <div
+                class="chart"
+                id="c18"
+                data-label="C18 · Dumbbell chart"
+                data-task="Task 7"
+              ></div>
+              <figcaption class="source">
+                Source: ABS, <em>Characteristics of Australian Business</em>
+              </figcaption>
+            </figure>
+          </div>
+
+          <h3 class="subhead">Key findings</h3>
+          <div class="findings">
+            <article class="card finding">
+              <p class="finding-num">1</p>
+              <h4>Innovation is common</h4>
+              <p>
+                Almost half of businesses do it, mostly by changing how they
+                work.
+              </p>
+            </article>
+            <article class="card finding">
+              <p class="finding-num">2</p>
+              <h4>Different industries lead</h4>
+              <p>
+                Retailers innovate most often; scientific and technical services
+                spend the most.
+              </p>
+            </article>
+            <article class="card finding">
+              <p class="finding-num">3</p>
+              <h4>Size matters</h4>
+              <p>
+                Large businesses are almost twice as likely to innovate as micro
+                businesses.
+              </p>
+            </article>
+            <article class="card finding">
+              <p class="finding-num">4</p>
+              <h4>Place matters</h4>
+              <p>
+                R&amp;D spending is concentrated in New South Wales and
+                Victoria.
+              </p>
+            </article>
+            <article class="card finding">
+              <p class="finding-num">5</p>
+              <h4>Money holds it back</h4>
+              <p>
+                Innovation has grown, investment hasn't, and funding is the main
+                barrier.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- About -->
+      <section id="about" class="story-section">
+        <div class="container">
+          <header class="section-head">
+            <p class="section-num">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 9h.01"/><path d="M11 12h1v4h1"/></svg>
+              <span>About</span>
+            </p>
+            <h2>About this visualisation</h2>
+          </header>
+
+          <dl class="about-list">
+            <dt>Domain</dt>
+            <dd>
+              Business innovation in Australia: how many businesses introduce
+              new or improved products or ways of working, which industries,
+              business sizes and states lead, how this has changed over time,
+              and what holds businesses back.
+            </dd>
+            <dt>Who it's for</dt>
+            <dd>
+              Everyday Australians, including small-business owners and their
+              staff. No statistics background is needed: terms such as
+              "innovation-active" and "R&amp;D" are explained where they first
+              appear.
+            </dd>
+            <dt>What (data)</dt>
+            <dd>
+              The latest official figures: the ABS
+              <em>Characteristics of Australian Business, 2024–25</em> and
+              business R&amp;D survey, the WIPO
+              <em>Global Innovation Index 2026</em>, IP Australia patent and
+              trade mark records, OECD R&amp;D statistics, and Natural Earth and
+              ABS boundaries for the maps. Most values are shares of businesses,
+              dollars, or index scores and ranks.
+            </dd>
+            <dt>Why (purpose)</dt>
+            <dd>
+              To let readers compare innovation across industries, business
+              sizes, states and countries; see how the parts make up the whole;
+              find where innovation happens; follow how it has changed; and
+              identify what stops businesses from innovating.
+            </dd>
+            <dt>How (charts)</dt>
+            <dd>
+              18 Vega-Lite charts, including five kinds of map (choropleth,
+              proportional symbol, flow, dot and bin maps) and a sunburst,
+              waffle, heatmap, lollipop, Marimekko, dumbbell, bump and slope
+              chart. Colour keeps one meaning throughout: darker purple means
+              more innovation, blue and green are the two types of innovation,
+              and orange marks Australia. Maps use equal-area projections, and
+              tooltips and toggles add detail where it helps.
+            </dd>
+          </dl>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <h3>About</h3>
+            <p>
+              <em>Ideas at Work</em> was created by Mok Weng Cheong Ronald for
+              FIT3179 Data Visualisation, Monash University.
+            </p>
+            <p>Updated 24 October 2026.</p>
+          </div>
+          <div>
+            <h3>Data sources</h3>
+            <!-- One item per data source, added as each chart is built -->
+            <ul class="sources">
+              <li>
+                Australian Bureau of Statistics (2026, 25 June).
+                <a
+                  href="https://www.abs.gov.au/statistics/industry/technology-and-innovation/characteristics-australian-business/2024-25"
+                  ><em>Characteristics of Australian Business, 2024–25</em></a
+                >, data cube 8: Innovation activity, data cube 6: Use of ICT, and the
+                release's AI tables. CC BY 4.0. Used in C1, C2, C6, C7, C8 and C9.
+              </li>
+              <li>
+                Australian Bureau of Statistics (2025, 22 August).
+                <a
+                  href="https://www.abs.gov.au/statistics/industry/technology-and-innovation/research-and-experimental-development-businesses-australia/2023-24"
+                  ><em
+                    >Research and Experimental Development, Businesses, Australia,
+                    2023–24</em
+                  ></a
+                >, data cube 2: R&amp;D by industry. CC BY 4.0. Used in C7.
+              </li>
+              <li>
+                World Intellectual Property Organization (2026).
+                <a href="https://doi.org/10.34667/tind.60635"
+                  ><em>Global Innovation Index 2026</em> data set</a
+                >. Used in C3.
+              </li>
+              <li>
+                World Intellectual Property Organization (2026).
+                <a
+                  href="https://www.wipo.int/web-publications/global-innovation-index-2026/en/gii-2026-ranking-of-world-s-top-100-innovation-clusters.html"
+                  ><em>GII 2026 ranking of the world's top 100 innovation
+                    clusters</em></a
+                >, shares of PCT applications, scientific publications and
+                venture capital deals. Used in C4.
+              </li>
+              <li>
+                Natural Earth.
+                <a
+                  href="https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-populated-places/"
+                  ><em>Populated Places, 1:10m</em></a
+                >, for the city locations in C4 and C5. Public domain. Ningde's
+                location is from the
+                <a href="https://geonames.nga.mil/geon-ags/">NGA GEOnet Names Server</a>.
+              </li>
+              <li>
+                World Intellectual Property Organization (2026, May).
+                <a href="https://www3.wipo.int/ipstats/"
+                  >WIPO IP Statistics Data Center</a
+                >, total patent applications by filing office and applicant's
+                origin (Australia), 2015–2024. Used in C5.
+              </li>
+              <li>
+                IP Australia (2026).
+                <a
+                  href="https://www.ipaustralia.gov.au/tools-and-research/professional-resources/data-research-and-reports/australian-ip-report-2026/patents/states-and-territories-and-australian-filings-abroad"
+                  ><em>Australian IP Report 2026</em>: Australian filings
+                  abroad</a
+                >. Used to check C5.
+              </li>
+              <li>
+                Geoscience Australia.
+                <a
+                  href="https://www.ga.gov.au/scientific-topics/national-location-information/dimensions/centre-of-australia-states-territories"
+                  >Centre of Australia</a
+                >
+                (Lambert Gravitational Centre), the start point of the C5 lines.
+              </li>
+              <li>
+                Natural Earth.
+                <a href="https://www.naturalearthdata.com/"
+                  ><em>Admin 0 – Countries, 1:110m</em></a
+                >, via the
+                <a href="https://github.com/FIT3179/Vega-Lite"
+                  >FIT3179 Vega-Lite repository</a
+                >. Public domain. Used in C3.
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3>Credits</h3>
+            <p>
+              Charts built with Vega-Lite. Typefaces: Space Grotesk and IBM Plex
+              Sans (Google Fonts). Icons:
+              <a href="https://tabler.io/icons">Tabler Icons</a> (MIT licence).
+            </p>
+            <p>
+              AI use: Claude (Anthropic) helped plan the storyline, prepare the
+              data files from the sources listed, and draft and test the chart
+              specifications and page code. No data or images were generated by
+              AI.
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

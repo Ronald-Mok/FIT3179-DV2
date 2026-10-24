@@ -1,0 +1,132 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "C4 Proportional symbol map (world): the GII 2026 top 100 innovation clusters. Circle area = the cluster's average share of the world's PCT patent applications, scientific articles and venture capital deals (WIPO weights the three equally). Each circle sits on the cluster's main city. Sydney and Melbourne are highlighted. Equal Earth projection, matching C3.",
+  "width": "container",
+  "height": 360,
+  "projection": { "type": "equalEarth" },
+  "layer": [
+    {
+      "data": {
+        "url": "data/geo/world_110m.topojson",
+        "format": { "type": "topojson", "feature": "countries" }
+      },
+      "mark": { "type": "geoshape", "fill": "#e3e5e8", "stroke": "#ffffff", "strokeWidth": 0.5 }
+    },
+    {
+      "data": {
+        "url": "data/gii_2026_clusters.csv",
+        "format": {
+          "type": "csv",
+          "parse": {
+            "rank": "number",
+            "pct_share": "number",
+            "pubs_share": "number",
+            "vc_share": "number",
+            "lon": "number",
+            "lat": "number"
+          }
+        }
+      },
+      "transform": [
+        {
+          "calculate": "(datum.pct_share + datum.pubs_share + datum.vc_share) / 3",
+          "as": "avg_share"
+        },
+        {
+          "calculate": "datum.cluster === 'Sydney' || datum.cluster === 'Melbourne' ? 'Australia' : 'Rest of the world'",
+          "as": "group"
+        },
+        {
+          "calculate": "datum.rank % 100 >= 11 && datum.rank % 100 <= 13 ? 'th' : ['th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th'][datum.rank % 10]",
+          "as": "suffix"
+        },
+        { "calculate": "datum.rank + datum.suffix", "as": "rank_label" },
+        { "calculate": "datum.cluster + ' · ' + datum.rank_label", "as": "label" }
+      ],
+      "layer": [
+        {
+          "mark": { "type": "circle", "stroke": "#ffffff", "strokeWidth": 0.6 },
+          "encoding": {
+            "longitude": { "field": "lon", "type": "quantitative" },
+            "latitude": { "field": "lat", "type": "quantitative" },
+            "size": {
+              "field": "avg_share",
+              "type": "quantitative",
+              "title": ["Average share of world", "patents, papers and VC deals"],
+              "scale": { "type": "linear", "zero": true, "range": [0, 1600] },
+              "legend": {
+                "orient": "bottom-left",
+                "values": [0.5, 2, 4],
+                "labelExpr": "format(datum.value, '.1~f') + '%'",
+                "titleLimit": 280,
+                "symbolFillColor": "#8a94a0",
+                "symbolStrokeColor": "#ffffff",
+                "symbolOpacity": 0.6
+              }
+            },
+            "color": {
+              "field": "group",
+              "type": "nominal",
+              "scale": { "domain": ["Australia", "Rest of the world"], "range": ["#d55e00", "#5c7590"] },
+              "legend": null
+            },
+            "opacity": {
+              "condition": { "test": "datum.group === 'Australia'", "value": 0.95 },
+              "value": 0.5
+            },
+            "order": { "field": "avg_share", "sort": "descending" },
+            "tooltip": [
+              { "field": "cluster", "title": "Cluster" },
+              { "field": "rank_label", "title": "Rank (of 100)" },
+              { "field": "pct_share", "title": "Share of PCT patent applications (%)", "format": ".2f" },
+              { "field": "pubs_share", "title": "Share of scientific articles (%)", "format": ".2f" },
+              { "field": "vc_share", "title": "Share of venture capital deals (%)", "format": ".2f" },
+              { "field": "avg_share", "title": "Average of the three (%)", "format": ".2f" }
+            ]
+          }
+        },
+        {
+          "transform": [
+            { "filter": "indexof(['Tokyo–Yokohama', 'Sydney'], datum.cluster) >= 0" },
+            { "calculate": "replace(datum.label, '–', '–|')", "as": "label" }
+          ],
+          "mark": { "type": "text", "align": "left", "baseline": "middle", "dx": 22, "fontSize": 11, "fontWeight": 600, "lineBreak": "|" },
+          "encoding": {
+            "longitude": { "field": "lon", "type": "quantitative" },
+            "latitude": { "field": "lat", "type": "quantitative" },
+            "text": { "field": "label" },
+            "color": {
+              "condition": { "test": "datum.group === 'Australia'", "value": "#d55e00" },
+              "value": "#3d4652"
+            }
+          }
+        },
+        {
+          "transform": [
+            { "filter": "datum.cluster === 'San Jose–San Francisco'" },
+            { "calculate": "replace(datum.label, '–', '–|')", "as": "label" }
+          ],
+          "mark": { "type": "text", "align": "right", "baseline": "middle", "dx": -24, "fontSize": 11, "fontWeight": 600, "color": "#3d4652", "lineBreak": "|" },
+          "encoding": {
+            "longitude": { "field": "lon", "type": "quantitative" },
+            "latitude": { "field": "lat", "type": "quantitative" },
+            "text": { "field": "label" }
+          }
+        },
+        {
+          "transform": [{ "filter": "indexof(['Shenzhen–Hong Kong–Guangzhou', 'Melbourne'], datum.cluster) >= 0" }],
+          "mark": { "type": "text", "align": "center", "baseline": "top", "dy": 24, "fontSize": 11, "fontWeight": 600 },
+          "encoding": {
+            "longitude": { "field": "lon", "type": "quantitative" },
+            "latitude": { "field": "lat", "type": "quantitative" },
+            "text": { "field": "label" },
+            "color": {
+              "condition": { "test": "datum.group === 'Australia'", "value": "#d55e00" },
+              "value": "#3d4652"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

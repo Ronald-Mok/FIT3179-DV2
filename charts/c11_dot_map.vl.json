@@ -1,0 +1,115 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "C11 Dot map: one dot per standard patent application filed in 2025 with an Australian applicant (IP Australia IP RAPID). Each dot is placed at a random point inside the applicant's postcode area (ABS postal areas), so no address is shown. A drop-down zooms to one state or territory by filtering the data, which refits the projection.",
+  "width": "container",
+  "height": 420,
+  "params": [
+    {
+      "name": "zoom",
+      "value": "All",
+      "bind": {
+        "input": "select",
+        "name": "Zoom to ",
+        "options": ["All", "NSW", "VIC", "QLD", "WA", "SA", "TAS", "ACT", "NT"],
+        "labels": ["All of Australia", "New South Wales", "Victoria", "Queensland", "Western Australia", "South Australia", "Tasmania", "Australian Capital Territory", "Northern Territory"]
+      }
+    }
+  ],
+  "projection": { "type": "conicEqualArea", "parallels": [-18, -36], "rotate": [-132, 0] },
+  "layer": [
+    {
+      "data": { "url": "data/geo/aus_states.topojson", "format": { "type": "topojson", "feature": "states" } },
+      "transform": [
+        {
+          "lookup": "properties.state",
+          "from": { "data": { "url": "data/geo/state_labels.csv" }, "key": "state", "fields": ["abbr"] }
+        },
+        { "filter": "zoom === 'All' || datum.abbr === zoom" }
+      ],
+      "mark": { "type": "geoshape", "fill": "#eef0f2", "stroke": "#ffffff", "strokeWidth": 1 }
+    },
+    {
+      "data": {
+        "url": "data/patent_points_2025.csv",
+        "format": { "type": "csv", "parse": { "lon": "number", "lat": "number" } }
+      },
+      "transform": [{ "filter": "zoom === 'All' || datum.state === zoom" }],
+      "mark": { "type": "circle", "size": { "expr": "zoom === 'All' ? 9 : 16" }, "color": "#54278f", "opacity": 0.4 },
+      "encoding": {
+        "longitude": { "field": "lon", "type": "quantitative" },
+        "latitude": { "field": "lat", "type": "quantitative" },
+        "tooltip": [
+          { "field": "area", "title": "Area" },
+          { "field": "state", "title": "State or territory" },
+          { "field": "applicant", "title": "Applicant" }
+        ]
+      }
+    },
+    {
+      "data": {
+        "values": [
+          { "city": "Sydney", "state": "NSW", "lon": 151.21, "lat": -33.87, "align": "left" },
+          { "city": "Melbourne", "state": "VIC", "lon": 144.96, "lat": -37.81, "align": "right" },
+          { "city": "Brisbane", "state": "QLD", "lon": 153.03, "lat": -27.47, "align": "left" },
+          { "city": "Perth", "state": "WA", "lon": 115.86, "lat": -31.95, "align": "right" },
+          { "city": "Adelaide", "state": "SA", "lon": 138.6, "lat": -34.93, "align": "right" },
+          { "city": "Hobart", "state": "TAS", "lon": 147.33, "lat": -42.88, "align": "left" },
+          { "city": "Canberra", "state": "ACT", "lon": 149.13, "lat": -35.28, "align": "left" },
+          { "city": "Darwin", "state": "NT", "lon": 130.84, "lat": -12.46, "align": "left" }
+        ]
+      },
+      "transform": [
+        { "filter": "zoom === 'All' ? indexof(['Sydney', 'Melbourne', 'Brisbane', 'Perth'], datum.city) >= 0 : datum.state === zoom" }
+      ],
+      "encoding": {
+        "longitude": { "field": "lon", "type": "quantitative" },
+        "latitude": { "field": "lat", "type": "quantitative" },
+        "text": { "field": "city" }
+      },
+      "layer": [
+        {
+          "transform": [{ "filter": "datum.align === 'left'" }],
+          "mark": { "type": "text", "align": "left", "dx": 8, "fontSize": 12, "fontWeight": 600, "color": "#1d2125", "stroke": "#ffffff", "strokeWidth": 3, "strokeOpacity": 0.8 }
+        },
+        {
+          "transform": [{ "filter": "datum.align === 'left'" }],
+          "mark": { "type": "text", "align": "left", "dx": 8, "fontSize": 12, "fontWeight": 600, "color": "#1d2125" }
+        },
+        {
+          "transform": [{ "filter": "datum.align === 'right'" }],
+          "mark": { "type": "text", "align": "right", "dx": -8, "fontSize": 12, "fontWeight": 600, "color": "#1d2125", "stroke": "#ffffff", "strokeWidth": 3, "strokeOpacity": 0.8 }
+        },
+        {
+          "transform": [{ "filter": "datum.align === 'right'" }],
+          "mark": { "type": "text", "align": "right", "dx": -8, "fontSize": 12, "fontWeight": 600, "color": "#1d2125" }
+        }
+      ]
+    },
+    {
+      "data": {
+        "url": "data/patent_points_2025.csv",
+        "format": { "type": "csv", "parse": { "lon": "number", "lat": "number" } }
+      },
+      "transform": [
+        { "filter": "zoom === 'All' || datum.state === zoom" },
+        { "calculate": "indexof(datum.area, 'Rest of') === 0 ? 0 : 1", "as": "in_capital" },
+        {
+          "aggregate": [
+            { "op": "count", "as": "n" },
+            { "op": "sum", "field": "in_capital", "as": "n_capital" }
+          ]
+        },
+        {
+          "calculate": "[format(datum.n, ',') + ' applications, ' + format(datum.n_capital / datum.n, '.0%') + ' from ' + (zoom === 'All' ? 'the eight capital cities' : ['Greater Sydney', 'Greater Melbourne', 'Greater Brisbane', 'Greater Perth', 'Greater Adelaide', 'Greater Hobart', 'Canberra', 'Greater Darwin'][indexof(['NSW', 'VIC', 'QLD', 'WA', 'SA', 'TAS', 'ACT', 'NT'], zoom)])]",
+          "as": "note"
+        }
+      ],
+      "mark": { "type": "text", "align": "left", "baseline": "top", "fontSize": 12, "fontStyle": "italic", "lineHeight": 16, "color": "#1d2125" },
+      "encoding": {
+        "x": { "value": 0 },
+        "y": { "value": 448 },
+        "text": { "field": "note" }
+      }
+    }
+  ]
+}
