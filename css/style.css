@@ -129,6 +129,12 @@ a {
   margin-top: 16px;
 }
 
+/* Key numbers and findings in the story text */
+main p strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
 .big-stat {
   font-family: var(--font-head);
   font-weight: 700;
@@ -377,6 +383,29 @@ a {
 
 .chart {
   width: 100%;
+}
+
+/* Chart tooltips (vega-tooltip): same typeface and colours as the page.
+   The id + class selector outranks the styles vega-tooltip injects. */
+#vg-tooltip-element.vg-tooltip {
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--ink);
+  background-color: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(29, 33, 37, 0.12);
+  padding: 8px 10px;
+}
+
+#vg-tooltip-element.vg-tooltip table tr td.key {
+  color: var(--ink-muted);
+  padding-right: 8px;
+}
+
+#vg-tooltip-element.vg-tooltip table tr td.value {
+  font-weight: 500;
 }
 
 .chart .vega-embed {

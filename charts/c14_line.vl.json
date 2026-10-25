@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "C14 Line chart: % of Australian businesses that were innovation-active in each ABS innovation survey, 2006-07 to 2024-25 (DISR Australian Innovation Statistics, from ABS; 2024-25 from ABS CAB). Solid lines join years measured the same way. Dashed links cross the two method changes: new (Oslo Manual 2018) definitions from 2018-19, and a one-year question from 2024-25 instead of two years.",
+  "description": "C14 Line chart: % of Australian businesses that were innovation-active in each ABS innovation survey, 2006-07 to 2024-25 (DISR Australian Innovation Statistics, from ABS; 2024-25 from ABS CAB). Solid lines join years measured the same way. Dashed links cross the two method changes: new (Oslo Manual 2018) definitions from 2018-19, and a one-year question from 2024-25 instead of two years. The y-axis starts at 30% (not 0) so the changes between surveys are visible; a note on the chart says so.",
   "width": "container",
   "height": 340,
   "data": {
@@ -279,6 +279,32 @@
           }
         }
       ]
+    },
+    {
+      "data": {
+        "values": [
+          {}
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "bottom",
+        "fontSize": 11,
+        "fontStyle": "italic",
+        "color": "#5b6470"
+      },
+      "encoding": {
+        "x": {
+          "value": 6
+        },
+        "y": {
+          "value": 326
+        },
+        "text": {
+          "value": "Axis starts at 30%, not 0, so the changes are easier to see"
+        }
+      }
     }
   ]
 }

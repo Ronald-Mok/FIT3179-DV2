@@ -61,14 +61,14 @@
         "color": {
           "field": "industry",
           "type": "nominal",
-          "scale": { "domain": ["Retail", "Accommodation & food", "Manufacturing"], "range": ["#08519c", "#009e73", "#a01d26"] },
+          "scale": { "domain": ["Retail", "Accommodation & food", "Manufacturing"], "range": ["#08519c", "#1d2125", "#8c510a"] },
           "legend": null
         }
       }
     },
     {
       "transform": [{ "filter": { "param": "hover", "empty": false } }],
-      "mark": { "type": "line", "color": "#1d2125", "strokeWidth": 3.5, "strokeCap": "round", "strokeJoin": "round" },
+      "mark": { "type": "line", "color": "#5b6470", "strokeWidth": 3.5, "strokeCap": "round", "strokeJoin": "round" },
       "encoding": { "detail": { "field": "industry" } }
     },
     {

@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "C6 Heatmap: % of businesses in each industry that introduced each type of innovation in 2024-25 (ABS). Rows are sorted by the % innovation-active. Columns are grouped into technological change (products and processes) and organisational and marketing change, following the Oslo Manual's earlier split. The outlined cell in each column is the industry that leads that type. Hovering over a row highlights it.",
+  "description": "C6 Heatmap: % of businesses in each industry that introduced each type of innovation in 2024-25 (ABS). Rows are sorted by the % innovation-active. Columns are grouped into technological change (products and processes) and organisational and marketing change, following the Oslo Manual's earlier split. The outlined cell in each column is the industry that leads that type; only those cells (and Transport, the lowest innovation-active) carry a number, so the key values stand out. Every other value is in the tooltip. Hovering over a row highlights it.",
   "data": {
     "url": "data/innovation_by_industry_2024-25.csv",
     "format": {
@@ -323,7 +323,12 @@
               },
               "value": 0.35
             }
-          }
+          },
+          "transform": [
+            {
+              "filter": "datum.leads || (datum.measure === 'innovation_active' && datum.industry === 'Transport')"
+            }
+          ]
         }
       ]
     },
@@ -466,7 +471,12 @@
               },
               "value": 0.35
             }
-          }
+          },
+          "transform": [
+            {
+              "filter": "datum.leads || (datum.measure === 'innovation_active' && datum.industry === 'Transport')"
+            }
+          ]
         }
       ]
     },
@@ -609,7 +619,12 @@
               },
               "value": 0.35
             }
-          }
+          },
+          "transform": [
+            {
+              "filter": "datum.leads || (datum.measure === 'innovation_active' && datum.industry === 'Transport')"
+            }
+          ]
         }
       ]
     }
